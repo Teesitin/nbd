@@ -48,6 +48,8 @@
 .search-bar {
 
     padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 16px;
     font-family: 'Inconsolata';
     color: white;
