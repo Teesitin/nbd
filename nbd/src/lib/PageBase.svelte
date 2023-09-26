@@ -1,5 +1,6 @@
 <script>
     export let pageTitle = "Nothing But Docs";
+    import NavBar from "./components/NavBar.svelte";
 </script>
 
 
@@ -20,7 +21,8 @@
 
 </head>
 
-
+<NavBar>
+</NavBar>
 
 <slot>
 </slot>
