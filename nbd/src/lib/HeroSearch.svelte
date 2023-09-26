@@ -55,7 +55,7 @@
         
         <!-- Doc Search -->
         <div class="search-container m-4 flex justify-center items-center border-violet-400 border-solid gap-4 flex-col w-72 sm:flex-row w-96">
-            <input type="text" class="search-bar w-full sm:w-5/6 " placeholder="Search...">
+            <input type="text" class="search-bar w-full sm:w-5/6 " placeholder="Search for Software...">
 
             <div class="w-10 h-10 bg-scorpion-50 rounded-full flex justify-center items-center transform transition-transform duration-300 hover:scale-110 cursor-pointer">
                 <svg class="w-6 h-6 p-1 text-scorpion-950 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
