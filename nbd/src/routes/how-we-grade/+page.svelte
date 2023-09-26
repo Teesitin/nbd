@@ -10,7 +10,7 @@
 
 <PageBase pageTitle="How We Grade">
 
-    <div class="container m-auto text-scorpion-50 font-'Telex'">
+    <div class="container m-auto text-scorpion-50 font-'Telex' text-base">
 
         <!-- Title -->
         <h1 class="text-4xl font-bold m-2">
