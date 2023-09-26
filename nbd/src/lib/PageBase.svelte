@@ -16,7 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Telex&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
     
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"> -->
+    <!-- <link rel="icon" type="image/svg+xml" href="./fav/fav.svg"> No worky? -->
+
 </head>
 
 

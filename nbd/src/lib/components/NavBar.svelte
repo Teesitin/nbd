@@ -3,17 +3,17 @@
 </script>
 
 
-<Navbar let:hidden let:toggle rounded color="form">
+<Navbar let:hidden let:toggle rounded color="form" class="bg-transparent text-scorpion-50">
     <NavBrand href="/">
-      <img src="/images/flowbite-svelte-icon-logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-      <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite</span>
+
+      <span class="self-center whitespace-nowrap text-xl font-semibold ">NBD</span>
     </NavBrand>
     <NavHamburger on:click={toggle} />
     <NavUl {hidden}>
-      <NavLi href="/" active={true}>Home</NavLi>
-      <NavLi href="/about">About</NavLi>
-      <NavLi href="/docs/components/navbar">Navbar</NavLi>
-      <NavLi href="/pricing">Pricing</NavLi>
-      <NavLi href="/contact">Contact</NavLi>
+      <NavLi href="/" active={true} class="text-scorpion-50">Home</NavLi>
+      <NavLi href="/how-we-grade" class="text-scorpion-50">Methodology</NavLi>
+      <NavLi href="/about" class="text-scorpion-50">About</NavLi>
+      <NavLi href="/donate" class="text-scorpion-50">Donate</NavLi>
+      <NavLi href="/faq" class="text-scorpion-50">FAQ</NavLi>
     </NavUl>
-  </Navbar>
+</Navbar>
