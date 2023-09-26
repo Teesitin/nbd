@@ -8,7 +8,7 @@
       @import url('https://fonts.googleapis.com/css2?family=Telex&display=swap');
 
     :root {
-        --background: #2c2627;
+        --background: #1e1e1e;
         --action: #dc142f;
         --text: #ededed;
     }
@@ -50,45 +50,55 @@
 
 
     <!-- Definitions and Examples -->
-    <h2 class="text-2xl font-bold m-2">
-        Completeness and Accuracy
-    </h2>
+    <div class="m-4">
+        <h2 class="text-2xl font-bold m-2">
+            Document
+        </h2>
 
-    <p class="m-2">
-        Coverage of all essential topics, correctness of information, and inclusion of examples for complex topics.
-    </p> 
+        <p class="m-2">
+            Coverage of all essential topics, correctness of information, and inclusion of examples for complex topics.
+        </p> 
+    </div>
 
-    <h2 class="text-2xl font-bold m-2">
-        Clarity and Consistency
-    </h2>
+    <div class="m-4">
+        <h2 class="text-2xl font-bold m-2">
+            Clarity
+        </h2>
 
-    <p class="m-2">
-        Understandability, logical flow of information, consistent terminology, and formatting.
-    </p>
+        <p class="m-2">
+            Understandability, logical flow of information, consistent terminology, and formatting.
+        </p>
+    </div>
 
-    <h2 class="text-2xl font-bold m-2">
-        Accessibility and Navigation
-    </h2>
+    <div class="m-4">
+        <h2 class="text-2xl font-bold m-2">
+            Ease-of-Use
+        </h2>
 
-    <p class="m-2">
-        Accessibility features, ease of navigation through the documentation, and multilingual availability.
-    </p>
+        <p class="m-2">
+            Accessibility features, ease of navigation through the documentation, and multilingual availability.
+        </p>
+    </div>
 
-    <h2 class="text-2xl font-bold m-2">
-        Visuals and Interactivity
-    </h2>
+    <div class="m-4">
+        <h2 class="text-2xl font-bold m-2">
+            Features
+        </h2>
 
-    <p class="m-2">
-        Inclusion and quality of visual aids, interactive examples, and code blocks for hands-on learning.
-    </p>
+        <p class="m-2">
+            Inclusion and quality of visual aids, interactive examples, and code blocks for hands-on learning.
+        </p>
+    </div>
 
-    <h2 class="text-2xl font-bold m-2">
-        Support and Community Engagement
-    </h2>
+    <div class="m-4">
+        <h2 class="text-2xl font-bold m-2">
+            Engagement
+        </h2>
 
-    <p class="m-2">
-        Availability of support resources, active community forums, and channels for user feedback or contributions to the documentation.
-    </p>
+        <p class="m-2">
+            Availability of support resources, active community forums, and channels for user feedback or contributions to the documentation.
+        </p>
+    </div>
     
 </div>
 
