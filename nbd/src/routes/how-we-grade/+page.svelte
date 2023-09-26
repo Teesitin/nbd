@@ -3,38 +3,21 @@
 </script>
 
 <style lang="scss">
-      @import url('https://fonts.googleapis.com/css2?family=Telex&display=swap');
-
-    :root {
-        --background: #1e1e1e;
-        --action: #dc142f;
-        --text: #ededed;
-    }
-
-    :global(html) {
-        background-color: var(--background);
-        color: var(--text);
-        font-family: 'Telex', Arial, Helvetica, sans-serif;
-    }
-
     .container {
         width: 1200px;
     }
-
 </style>
-
-
 
 <PageBase pageTitle="How We Grade">
 
-    <div class="container m-auto">
+    <div class="container m-auto text-scorpion-50 font-'Telex'">
 
         <!-- Title -->
         <h1 class="text-4xl font-bold m-2">
             Grading is subjective, but so is everything else
         </h1>
 
-    <div class="h-10"></div>
+        <div class="h-10"></div>
 
         <h2 class="text-2xl font-bold m-2">
             Methodology v1.0
@@ -44,7 +27,7 @@
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         </h3>
 
-    <div class="h-10"></div>
+        <div class="h-10"></div>
 
         <!-- Put Nav Menu Here -->
 
