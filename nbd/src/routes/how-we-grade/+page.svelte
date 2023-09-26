@@ -1,6 +1,5 @@
 <script>
     import PageBase from "$lib/PageBase.svelte";
-    import Page from "../+page.svelte";
 </script>
 
 <style lang="scss">

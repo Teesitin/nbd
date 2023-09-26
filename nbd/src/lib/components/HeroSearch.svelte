@@ -42,7 +42,7 @@
 
 
 <body class="bg-scorpion-950">
-    <div class="w-screen h-screen flex justify-center flex-col items-center">
+    <div class="w-full h-96 flex justify-center flex-col items-center">
 
         <!-- Hero -->
         <h1 class="text-5xl font-bold m-2 text-scorpion-50 text-center">
