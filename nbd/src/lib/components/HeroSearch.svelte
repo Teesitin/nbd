@@ -41,7 +41,7 @@
 </style>
 
 
-<body class="bg-scorpion-950">
+
     <div class="w-full h-96 flex justify-center flex-col items-center">
 
         <!-- Hero -->
@@ -65,4 +65,4 @@
         </div>
 
     </div>
-</body>
+
