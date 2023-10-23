@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fontsource/roboto':
+    specifier: ^5.0.8
+    version: 5.0.8
+  '@fontsource/telex':
+    specifier: ^5.0.8
+    version: 5.0.8
   iconify-icon:
     specifier: ^1.0.8
     version: 1.0.8
@@ -285,6 +291,14 @@ packages:
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
     dev: true
+
+  /@fontsource/roboto@5.0.8:
+    resolution: {integrity: sha512-XxPltXs5R31D6UZeLIV1td3wTXU3jzd3f2DLsXI8tytMGBkIsGcc9sIyiupRtA8y73HAhuSCeweOoBqf6DbWCA==}
+    dev: false
+
+  /@fontsource/telex@5.0.8:
+    resolution: {integrity: sha512-YREU+ZWcv+DNEUIoGyZDhgWf1ol07H9gtdwYID2LpRIxKrOSV/ofWfxxHxFKaDEEL7CxiqU5RhfOv7NxK78jjQ==}
+    dev: false
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}

@@ -27,6 +27,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource/roboto": "^5.0.8",
+		"@fontsource/telex": "^5.0.8",
 		"iconify-icon": "^1.0.8",
 		"prettier": "^3.0.3"
 	}

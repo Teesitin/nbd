@@ -4,7 +4,6 @@
 </script>
 
 
-<PageBase>
+
     <HeroSearch>
     </HeroSearch>
-</PageBase>
