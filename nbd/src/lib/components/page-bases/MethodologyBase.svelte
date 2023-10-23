@@ -1,22 +1,23 @@
 <script>
 </script>
 
-<div class=" text-scorpion-50 font-telex max-w-6xl m-auto">
+
+
+<div class=" text-scorpion-950 font-telex max-w-6xl m-auto">
+
+    
 
     <!-- Title -->
-    <h1 class="text-4xl font-bold m-2">
-        Grading is subjective, but so is everything else
-    </h1>
+
+    <h1 class="my-8 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Better Data</span> Scalable AI.</h1>
+    
 
     <div class="h-10"></div>
 
-    <h2 class="text-2xl font-bold m-2">
-        Methodology v1.0
-    </h2>
 
-    <h3 class="m-2">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </h3>
+    <p class="mb-3 text-lg text-gray-500 md:text-xl dark:text-gray-400">Methodology 1.0</p>
+    <p class="text-gray-500 dark:text-gray-400">Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.</p>
+    
 
     <div class="h-10"></div>
 
