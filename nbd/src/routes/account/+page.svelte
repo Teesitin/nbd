@@ -2,6 +2,12 @@
 <script lang="ts">
 	import { enhance, type SubmitFunction } from '$app/forms'
 
+	import { Card, Dropdown, DropdownItem, Avatar, Button } from 'flowbite-svelte';
+	import { DotsHorizontalOutline } from 'flowbite-svelte-icons';
+
+	import { Modal } from 'flowbite-svelte';
+	let defaultModal = false;
+
 	export let data
 	export let form
 
@@ -30,7 +36,23 @@
 		}
 	}
 </script>
+  
+<Card padding="sm">
+	<div class="flex flex-col items-center pb-4">
+		<Avatar size="lg" src="/images/profile-picture-3.webp" />
+		<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">DeLayne Russell</h5>
+		<span class="text-sm text-gray-500 dark:text-gray-400">teesitin.russell@gmail.com</span>
+		<div class="flex mt-4 space-x-3 lg:mt-6">
+			<Button on:click={() => (defaultModal = true)}>Edit</Button>
 
+			<Button color="light" class="dark:text-white">Share</Button>
+		</div>
+	</div>
+</Card>
+  
+ <Modal title="Update Profile" bind:open={defaultModal} autoclose>
+
+	
 <div class="form-widget">
 	<form
 		class="form-widget"
@@ -75,3 +97,11 @@
 		</div>
 	</form>
 </div>
+
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
+	<svelte:fragment slot="footer">
+	  <Button on:click={() => alert('Handle "success"')}>I accept</Button>
+	  <Button color="alternative">Decline</Button>
+	</svelte:fragment>
+  </Modal>

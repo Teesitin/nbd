@@ -1,6 +1,6 @@
 <script lang="ts">import { Section, Register } from 'flowbite-svelte-blocks';
     import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
-    </script>
+  </script>
     
     <Section name="login">
       <Register href="/">
