@@ -32,6 +32,8 @@
 		"@fontsource/roboto": "^5.0.8",
 		"@fontsource/telex": "^5.0.8",
 		"@supabase/auth-helpers-sveltekit": "^0.10.3",
+		"@supabase/auth-ui-shared": "^0.1.8",
+		"@supabase/auth-ui-svelte": "^0.2.7",
 		"@supabase/supabase-js": "^2.38.3",
 		"iconify-icon": "^1.0.8",
 		"prettier": "^3.0.3",
