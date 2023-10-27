@@ -1,5 +1,10 @@
 <script lang="ts">import { Section, Register } from 'flowbite-svelte-blocks';
-    import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
+  import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
+
+  import { Auth } from '@supabase/auth-ui-svelte';
+  import { ThemeSupa } from '@supabase/auth-ui-shared';
+
+  export let data;
   </script>
     
     <Section name="login">
@@ -31,3 +36,16 @@
         </div>
       </Register>
     </Section>
+
+
+    <div class="row flex-center flex">
+      <div class="col-6 form-widget">
+        <Auth
+          supabaseClient={data.supabase}
+          view="magic_link"
+          redirectTo={`/auth/callback`}
+          showLinks={false}
+          appearance={{ theme: ThemeSupa, style: { input: 'color: #fff' } }}
+        />
+      </div>
+    </div>
