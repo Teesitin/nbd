@@ -6,6 +6,8 @@
     import { Modal, Label, Input, Checkbox } from 'flowbite-svelte';
     import { Textarea } from 'flowbite-svelte';
     import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
+
 
     // Variables
     let formModal = false;
@@ -16,12 +18,11 @@
     let rating_comment = '';
     let tags = '';
     let category = '';
-    const supabase = createClient('https://ylyazslokycusixijqhs.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlseWF6c2xva3ljdXNpeGlqcWhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgxMDk5OTksImV4cCI6MjAxMzY4NTk5OX0.pDOVI9TAHRYwsAK6mFAB8rWb0arZ-S6w5ihoYy5Xlg0');
+    const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     let data: any[] = [];
 
     // Functions
     async function addDoc(event: Event) {
-        event.preventDefault(); // Prevent form from refreshing the page
         const doc = {
             title,
             description,
@@ -36,6 +37,7 @@
             console.error("Error inserting data:", error);
         } else {
             console.log("Data inserted:", data);
+            location.reload();
         }
     }
 
