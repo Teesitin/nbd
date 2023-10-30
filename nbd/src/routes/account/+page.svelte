@@ -5,7 +5,7 @@
 	import { DotsHorizontalOutline } from 'flowbite-svelte-icons';
 	import { Label, Input } from 'flowbite-svelte';
 	import { Modal } from 'flowbite-svelte';
-	
+
 	let defaultModal = false;
 	export let data;
 	export let form;
@@ -46,8 +46,9 @@
 	};
 
 </script>
-  
-<Card padding="sm">
+
+
+<Card padding="sm" class="m-auto">
 	<div class="flex flex-col items-center pb-4">
 		<Avatar size="lg" src="{avatarUrl}" />
 		<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{username}</h5>
@@ -60,7 +61,7 @@
 	</div>
 </Card>
   
-  <Modal title="Update Profile" bind:open={defaultModal} autoclose>  
+<Modal title="Update Profile" bind:open={defaultModal} autoclose>  
 	<div class="form-widget">
 		<form
 		class="form-widget"
@@ -92,7 +93,10 @@
 				</form>
 			</div>
 		</form>
-
-
 	</div>
-  </Modal>  
+</Modal>  
+
+
+<div id="table">
+
+</div>
