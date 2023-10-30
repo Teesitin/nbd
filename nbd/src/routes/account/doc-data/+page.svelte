@@ -9,26 +9,39 @@
     import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
 
 
-    // Variables
+    // Create Data
     let formModal = false;
     let title = '';
     let description = '';
-    let url_link = '';
+    let urlLink = '';
     let rating: number | null = null;
-    let rating_comment = '';
+    let ratingComment = '';
     let tags = '';
     let category = '';
     const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     let data: any[] = [];
+
+
+    // Edit Data
+    let editModal = false;
+    let editId = '';
+    let editTitle = '';
+    let editDescription = '';
+    let editUrlLink = '';
+    let editRating: number | null = null;
+    let editRatingComment = '';
+    let editTags = '';
+    let editCategory = '';
+
 
     // Functions
     async function addDoc(event: Event) {
         const doc = {
             title,
             description,
-            url_link,
+            url_link: urlLink,
             rating,
-            rating_comment,
+            rating_comment: ratingComment,
             tags,
             category
         };
@@ -40,6 +53,43 @@
             location.reload();
         }
     }
+
+    function loadEditData(doc: { id: any; title: string; description: string; url_link: string; rating: number | null; rating_comment: string; tags: string; category: string; }) {
+        editId = doc.id;
+        editTitle = doc.title;
+        editDescription = doc.description;
+        editUrlLink = doc.url_link;
+        editRating = doc.rating;
+        editRatingComment = doc.rating_comment;
+        editTags = doc.tags;
+        editCategory = doc.category;
+        editModal = true;
+    }
+
+    async function updateDoc() {
+        const updatedDoc = {
+            title: editTitle,
+            description: editDescription,
+            url_link: editUrlLink,
+            rating: editRating,
+            rating_comment: editRatingComment,
+            tags: editTags,
+            category: editCategory
+        };
+
+        console.log(updatedDoc);
+
+        const { data: updatedData, error } = await supabase.from('doc_data').update(updatedDoc).eq('id', editId);
+        if (error) {
+            console.error("Error updating data:", error);
+        } else {
+            const index = data.findIndex(doc => doc.id === editId);
+            location.reload();
+        }
+    }
+
+
+
 
     onMount(async () => {
         const { data: fetchedData, error } = await supabase.from('doc_data').select();
@@ -79,7 +129,7 @@
                 <TableBodyCell>{row.tags}</TableBodyCell>
                 <TableBodyCell>{row.category}</TableBodyCell>
                 <TableBodyCell>
-                    <a href="/edit/{row.id}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Edit</a>
+                    <a on:click={() => loadEditData(row)} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">Edit</a>
                 </TableBodyCell>
             </TableBodyRow>
             {/each}
@@ -96,7 +146,7 @@
         <!-- URL Link Input -->
         <Label class="space-y-2">
             <span>URL Link</span>
-            <Input bind:value={url_link} type="url" name="url_link" placeholder="Enter URL link" />
+            <Input bind:value={urlLink} type="url" name="urlLink" placeholder="Enter URL link" />
         </Label>
 
         <!-- Title Input -->
@@ -120,7 +170,7 @@
         <!-- Rating Comment Textarea -->
         <Label class="space-y-2">
             <span>Rating Comment</span>
-            <Textarea bind:value={rating_comment} name="rating_comm" placeholder="Enter rating comment"></Textarea>
+            <Textarea bind:value={ratingComment} name="rating_comment" placeholder="Enter rating comment"></Textarea>
         </Label>
 
         <!-- Tags Input -->
@@ -137,5 +187,58 @@
 
         <!-- Submit Button -->
         <Button type="submit" class="w-full">Add to Database</Button>
+    </form>
+</Modal>
+
+<!-- Modal for Editing Documents -->
+<Modal bind:open={editModal} size="md" autoclose={false} class="w-full">
+    <form class="flex flex-col space-y-6" on:submit={updateDoc}>
+        <!-- Add New Document Data Header -->
+        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Document Data</h3>
+
+        <!-- URL Link Input -->
+        <Label class="space-y-2">
+            <span>URL Link</span>
+            <Input bind:value={editUrlLink} type="url" name="urlLink" placeholder="Enter URL link" />
+        </Label>
+
+        <!-- Title Input -->
+        <Label class="space-y-2">
+            <span>Title</span>
+            <Input bind:value={editTitle} type="text" name="title" placeholder="Enter title" required />
+        </Label>
+
+        <!-- Description Textarea -->
+        <Label class="space-y-2">
+            <span>Description</span>
+            <Textarea bind:value={editDescription} name="description" placeholder="Enter description" required></Textarea>
+        </Label>
+
+        <!-- Rating Input -->
+        <Label class="space-y-2">
+            <span>Rating</span>
+            <Input bind:value={editRating} type="number" name="rating" placeholder="Enter rating (1-10)" min="1" max="10" />
+        </Label>
+
+        <!-- Rating Comment Textarea -->
+        <Label class="space-y-2">
+            <span>Rating Comment</span>
+            <Textarea bind:value={editRatingComment} name="rating_comm" placeholder="Enter rating comment"></Textarea>
+        </Label>
+
+        <!-- Tags Input -->
+        <Label class="space-y-2">
+            <span>Tags</span>
+            <Input bind:value={editTags} type="text" name="tags" placeholder="Enter tags (comma separated)" />
+        </Label>
+
+        <!-- Category Input -->
+        <Label class="space-y-2">
+            <span>Category</span>
+            <Input bind:value={editCategory} type="text" name="category" placeholder="Enter category" />
+        </Label>
+
+        <!-- Submit Button -->
+        <Button type="submit" class="w-full">Update Changes</Button>
     </form>
 </Modal>
