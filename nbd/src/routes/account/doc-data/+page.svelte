@@ -6,7 +6,9 @@
     import { Modal, Label, Input, Checkbox } from 'flowbite-svelte';
     import { Textarea } from 'flowbite-svelte';
     import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
-    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
+    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+    import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+
 
 
     // Create Data
@@ -20,6 +22,10 @@
     let category = '';
     const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     let data: any[] = [];
+
+    // Delete Data
+    let deleteModal = false;
+
 
 
     // Edit Data
@@ -89,6 +95,14 @@
     }
 
 
+    async function removeDoc() {
+        const { error } = await supabase.from('doc_data').delete().eq('id', editId);
+        if (error) {
+            console.error("Error deleting data:", error);
+        } else {
+            location.reload();
+        }
+    }
 
 
     onMount(async () => {
@@ -103,15 +117,14 @@
 
 <div class="max-w-7xl m-auto p-2">
     <!-- Add Docs Button -->
-    <Button on:click={() => (formModal = true)}>Add Docs</Button>
+    <Button on:click={() => (formModal = true)} class="mx-6 my-3">Add Docs</Button>
 
     <!-- Table -->
-    <Table striped={true}>
+    <Table>
         <!-- Table Header -->
         <TableHead>
-            <TableHeadCell>Title</TableHeadCell>
+            <TableHeadCell>Title and Url</TableHeadCell>
             <TableHeadCell>Description</TableHeadCell>
-            <TableHeadCell>URL Link</TableHeadCell>
             <TableHeadCell>Rating</TableHeadCell>
             <TableHeadCell>Tags</TableHeadCell>
             <TableHeadCell>Category</TableHeadCell>
@@ -122,9 +135,9 @@
         <TableBody>
             {#each data as row}
             <TableBodyRow>
-                <TableBodyCell>{row.title}</TableBodyCell>
-                <TableBodyCell>{row.description}</TableBodyCell>
-                <TableBodyCell>{row.url_link}</TableBodyCell>
+                <TableBodyCell><a href="{row.url_link}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{row.title}</a></TableBodyCell>
+                <TableBodyCell class="max-w-xs overflow-hidden">{row.description}</TableBodyCell>
+
                 <TableBodyCell>{row.rating}</TableBodyCell>
                 <TableBodyCell>{row.tags}</TableBodyCell>
                 <TableBodyCell>{row.category}</TableBodyCell>
@@ -186,7 +199,7 @@
         </Label>
 
         <!-- Submit Button -->
-        <Button type="submit" class="w-full">Add to Database</Button>
+        <Button type="submit" class="w-full">Add to My List</Button>
     </form>
 </Modal>
 
@@ -239,6 +252,20 @@
         </Label>
 
         <!-- Submit Button -->
-        <Button type="submit" class="w-full">Update Changes</Button>
+        <div class="flex">
+            <Button type="submit" class="w-1/2 mx-2 my-1">Update Changes</Button>
+            <Button color="alternative" class="w-1/2 mx-2 my-1" on:click={() => (deleteModal = true)}>Remove</Button>
+        </div>
     </form>
+</Modal>
+
+
+<!-- Delete -->
+<Modal bind:open={deleteModal} size="xs" autoclose>
+    <div class="text-center">
+      <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
+      <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
+      <Button color="red" on:click={removeDoc} class="mr-2">Yes, I'm sure</Button>
+      <Button color="alternative">No, cancel</Button>
+    </div>
 </Modal>
