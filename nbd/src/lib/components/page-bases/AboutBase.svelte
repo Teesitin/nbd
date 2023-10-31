@@ -1,66 +1,37 @@
 <script>
     import { Section, ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper, BlogHead, BlogBodyWrapper } from 'flowbite-svelte-blocks';
     import { VideoSolid, ArrowRightOutline, NewspaperSolid } from 'flowbite-svelte-icons';
+
+    import { Card, Button, Toggle } from 'flowbite-svelte';
+    import { Carousel } from 'flowbite-svelte';
+
+    let vCard = false;
+    let images = [{ alt: 'DeLayne Russell', srcset: '/about/2.webp' },{ alt: 'DeLayne Russell', srcset: '/about/1.webp' },{ alt: 'DeLayne Russell', srcset: '/about/3.webp' }];
+
   </script>
   
   <Section name="blog">
     <BlogHead>
-      <svelte:fragment slot="h2">The Team Behind NBD</svelte:fragment>
+      <svelte:fragment slot="h2">The Team Behind Nothing But Docs</svelte:fragment>
       <svelte:fragment slot="paragraph">
-        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">We use an agile approach to test assumptions and connect with the needs of your audience early and often.</p>
+        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">They say there is no 'i' in team.</p>
       </svelte:fragment>
     </BlogHead>
-    <BlogBodyWrapper>
-      <ArticleWrapper>
-        <ArticleHead>
-          <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
-            <VideoSolid size="xs" class="mr-1" />
-            Tutorial
-          </span>
-          <span class="text-sm">14 days ago</span>
-        </ArticleHead>
-        <ArticleBody>
-          <svelte:fragment slot="h2"><a href="/">How to quickly deploy a static website</a></svelte:fragment>
-          <svelte:fragment slot="paragraph">
-            <p class="mb-5 font-light text-gray-500 dark:text-gray-400">Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers influence both web designers and developers.</p>
-          </svelte:fragment>
-        </ArticleBody>
-        <ArticleAuthor>
-          <svelte:fragment slot="author">
-            <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="Jese Leos avatar" />
-            <span class="font-medium dark:text-white"> Jese Leos </span>
-          </svelte:fragment>
-          <a href="/" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
-            Read more
-            <ArrowRightOutline size="sm" class="ml-2" />
-          </a>
-        </ArticleAuthor>
-      </ArticleWrapper>
-  
-      <ArticleWrapper>
-        <ArticleHead>
-          <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
-            <NewspaperSolid size="xs" class="mr-1" />
-            Article
-          </span>
-          <span class="text-sm">14 days ago</span>
-        </ArticleHead>
-        <ArticleBody>
-          <svelte:fragment slot="h2"><a href="/">Our first project with React</a></svelte:fragment>
-          <svelte:fragment slot="paragraph">
-            <p class="mb-5 font-light text-gray-500 dark:text-gray-400">Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers influence both web designers and developers.</p>
-          </svelte:fragment>
-        </ArticleBody>
-        <ArticleAuthor>
-          <svelte:fragment slot="author">
-            <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="Bonnie Green avatar" />
-            <span class="font-medium dark:text-white"> Bonnie Green </span>
-          </svelte:fragment>
-          <a href="/" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
-            Read more
-            <ArrowRightOutline size="sm" class="ml-2" />
-          </a>
-        </ArticleAuthor>
-      </ArticleWrapper>
-    </BlogBodyWrapper>
+
+    <div>
+      <Card reverse={vCard} class="mb-4 m-auto">
+        <div class="max-w-4xl">
+          <Carousel {images} duration={3000} let:Indicators class="">
+            <Indicators />
+          </Carousel>
+        </div>
+
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">DeLayne Russell</h5>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">His biggest Dream is to complete this site. He likes Corned Beef and Cabbage.</p>
+        <Button>
+          Read more <ArrowRightOutline class="w-3.5 h-3.5 ml-2 text-white" />
+        </Button>
+      </Card>
+  </div>
+
   </Section>
