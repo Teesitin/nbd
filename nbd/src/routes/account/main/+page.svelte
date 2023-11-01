@@ -4,7 +4,6 @@
     let spanClass = 'flex-1 ml-3 whitespace-nowrap';
 
     import Table from '$lib/components/crud-blocks/Table.svelte'
-    import AdvanceTable from '$lib/components/crud-blocks/AdvanceTable.svelte';
 </script>
     
 <!-- Side Bar -->
@@ -55,7 +54,7 @@
   </Sidebar>
 
   <div class="w-5/6 bg-transparent">
-    <AdvanceTable />
+    <Table />
 
   </div>
 
