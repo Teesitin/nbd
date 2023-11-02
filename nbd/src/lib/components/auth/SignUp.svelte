@@ -1,0 +1,92 @@
+<script lang="ts">
+    import { Section, Register } from 'flowbite-svelte-blocks';
+    import { Button, Checkbox, Label, Input, Modal, Popover } from 'flowbite-svelte';
+    import { createEventDispatcher } from 'svelte';
+    import { supabase } from '@supabase/auth-ui-shared';
+
+    const dispatch = createEventDispatcher();
+
+    function toggleToLogin() {
+        dispatch('toggle', { newLoginState: true });
+    }
+    
+    let password = '';
+    let passwordStrength = '';
+
+    function checkPasswordStrength(pass: string) {
+        let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+        let mediumPassword = new RegExp('^(?=.*[!@#$%^&*]).{8,}$');
+
+        if(strongPassword.test(pass)) {
+        return 'Strong';
+        } else if(mediumPassword.test(pass)) {
+        return 'Medium';
+        } else {
+        return 'Weak';
+        }
+    }
+
+    $: passwordStrength = checkPasswordStrength(password), console.log(password);
+
+
+
+
+    // Sign Up
+
+    async function signUpNewUser() {
+    const { data, error } = await supabase.auth.signUp({
+        email: 'example@email.com',
+        password: 'example-password',
+        options: {
+        redirectTo: 'https//example.com/welcome'
+        }
+    })
+    }
+
+
+
+
+</script>
+
+
+<Section name="login">
+    <Register href="/">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <form class="flex flex-col space-y-6" action="/">
+          <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Sign Up</h3>
+  
+          <Label class="space-y-2">
+            <span>Email</span>
+            <Input type="email" name="emailNew" required />
+          </Label>
+  
+          <Label class="space-y-2">
+            <span>Password</span>
+            <Input type="password" name="passwordNew" required bind:value={password} />
+  
+            <p>Password strength: {passwordStrength}</p>
+          </Label>
+  
+          <Label class="space-y-2">
+            <span>Username</span>
+            <Input type="text" name="usernameNew" required />
+          </Label>
+  
+          <Label class="space-y-2">
+            <span>Full Name</span>
+            <Input type="text" name="fullName" placeholder="" />
+          </Label>
+  
+          <Label class="space-y-2">
+            <span>Avatar URL</span>
+            <Input type="url" name="avatarUrl" id="password" placeholder="" />
+          </Label>
+  
+          <div class="flex gap-6">
+            <Button type="button" color="alternative" class="w-1/2" on:click={toggleToLogin}>Go Back</Button>
+            <Button type="submit" class="w-1/2">Create Account</Button>
+          </div>
+        </form>
+      </div>
+    </Register>
+</Section>
