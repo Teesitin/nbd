@@ -34,7 +34,6 @@
     <TableHeadCell>Rating</TableHeadCell>
     <TableHeadCell>TL;DR</TableHeadCell>
     <TableHeadCell>Link to Doc</TableHeadCell>
-
 </TableHead>
 <TableBody>
     <TableBodyRow>
