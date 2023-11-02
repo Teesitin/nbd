@@ -10,8 +10,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     event,
   })
 
-  console.log("Help me");
-
   /**
    * A convenience helper so we can just call await getSession() instead const { data: { session } } = await supabase.auth.getSession()
    */

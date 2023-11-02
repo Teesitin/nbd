@@ -9,7 +9,12 @@
     function toggleToLogin() {
         dispatch('toggle', { newLoginState: true });
     }
-    
+
+    // Variables
+    let email = '';
+    let username = '';
+    let fullName = '';
+    let avatarUrl = '';
     let password = '';
     let passwordStrength = '';
 
@@ -32,61 +37,60 @@
 
 
     // Sign Up
-
     async function signUpNewUser() {
-    const { data, error } = await supabase.auth.signUp({
-        email: 'example@email.com',
-        password: 'example-password',
-        options: {
-        redirectTo: 'https//example.com/welcome'
+        const { data, error } = await (supabase as any).auth.signUp({
+            email,
+            password,
+            options: {
+            redirectTo: 'https://example.com/welcome'
         }
-    })
+    });
+    
+    if (error) {
+        console.error('Error signing up:', error);
+    } else {
+        console.log('Success! Check your email for the confirmation link.', data);
     }
-
-
-
-
+    }
 </script>
 
 
 <Section name="login">
     <Register href="/">
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <form class="flex flex-col space-y-6" action="/">
-          <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Sign Up</h3>
-  
-          <Label class="space-y-2">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Sign Up</h3>
+
+            <Label class="space-y-2">
             <span>Email</span>
-            <Input type="email" name="emailNew" required />
-          </Label>
-  
-          <Label class="space-y-2">
+            <Input type="email" name="emailNew" required bind:value={email}/>
+            </Label>
+
+            <Label class="space-y-2">
             <span>Password</span>
             <Input type="password" name="passwordNew" required bind:value={password} />
-  
+
             <p>Password strength: {passwordStrength}</p>
-          </Label>
-  
-          <Label class="space-y-2">
+            </Label>
+
+            <Label class="space-y-2">
             <span>Username</span>
-            <Input type="text" name="usernameNew" required />
-          </Label>
-  
-          <Label class="space-y-2">
+            <Input type="text" name="usernameNew" required bind:value={username}/>
+            </Label>
+
+            <Label class="space-y-2">
             <span>Full Name</span>
-            <Input type="text" name="fullName" placeholder="" />
-          </Label>
-  
-          <Label class="space-y-2">
+            <Input type="text" name="fullName" placeholder="" bind:value={fullName}/>
+            </Label>
+
+            <Label class="space-y-2">
             <span>Avatar URL</span>
-            <Input type="url" name="avatarUrl" id="password" placeholder="" />
-          </Label>
-  
-          <div class="flex gap-6">
+            <Input type="url" name="avatarUrl" id="password" placeholder="" bind:value={avatarUrl}/>
+            </Label>
+
+            <div class="flex gap-6">
             <Button type="button" color="alternative" class="w-1/2" on:click={toggleToLogin}>Go Back</Button>
-            <Button type="submit" class="w-1/2">Create Account</Button>
-          </div>
-        </form>
-      </div>
+            <Button type="button" class="w-1/2" on:click={signUpNewUser}>Create Account</Button>
+            </div>
+        </div>
     </Register>
 </Section>
