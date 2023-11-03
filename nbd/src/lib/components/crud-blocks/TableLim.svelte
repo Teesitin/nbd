@@ -9,7 +9,8 @@
     import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
-
+    // Catagory Filter
+    export let catagoryFilter = "";
 
     // Create Data
     let formModal = false;
@@ -113,6 +114,17 @@
             data = fetchedData;
         }
     });
+
+
+    // Filter Data
+    let filteredData = [''];
+
+    $: if (catagoryFilter) {
+        filteredData = data.filter(doc => doc.category.toLowerCase().includes(catagoryFilter.toLowerCase()));
+    } else {
+        filteredData = data;
+    }
+
 </script>
 
 <div class="max-w-7xl m-auto p-2">
@@ -133,7 +145,7 @@
 
         <!-- Table Body -->
         <TableBody>
-            {#each data as row}
+            {#each filteredData as row}
             <TableBodyRow>
                 <TableBodyCell><a href="{row.url_link}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{row.title}</a></TableBodyCell>
                 <TableBodyCell class="max-w-xs overflow-hidden">{row.description}</TableBodyCell>

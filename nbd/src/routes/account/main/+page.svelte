@@ -2,7 +2,7 @@
     import { Section, SidebarBottomNav, SidebarBottomNavItem } from 'flowbite-svelte-blocks';
     import { Button, Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownItem, SidebarDropdownWrapper, Dropdown, DropdownItem } from 'flowbite-svelte';
 
-    import Category from '$lib/components/crud-blocks/Category.svelte';
+    import PopulateCat from '$lib/components/crud-blocks/Category/PopulateCat.svelte';
     import Table from '$lib/components/crud-blocks/Table.svelte';
     import Reviews from '$lib/components/crud-blocks/Reviews.svelte';
     import Messages from '$lib/components/crud-blocks/Messages.svelte';
@@ -63,7 +63,7 @@
     {#if currentComponent === 'Table'}
         <Table />
     {:else if currentComponent === 'Category'}
-        <Category /> 
+        <PopulateCat /> 
     {:else if currentComponent === 'Reviews'}
         <Reviews />
     {:else if currentComponent === 'Messages'}

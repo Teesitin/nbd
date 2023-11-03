@@ -4,9 +4,9 @@
     import { Modal } from 'flowbite-svelte';
     let clickOutsideModal = false;
 
-    import TableLim from './TableLim.svelte';
+    import TableLim from '../TableLim.svelte';
 
-    export let categoryTitle='default';
+    export let categoryTitle='Front-end';
     export let categoryDesc='Everything you need to build out a modern web-app with a hint of spaghetti and cheese.';
 </script>
   
@@ -17,5 +17,5 @@
 </Card>
 
 <Modal title="{categoryTitle}" bind:open={clickOutsideModal} autoclose outsideclose size = 'xl'>
-    <TableLim />
+    <TableLim catagoryFilter = {categoryTitle}/>
 </Modal>
