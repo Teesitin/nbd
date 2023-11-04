@@ -3,6 +3,7 @@
     import { Button, Checkbox, Label, Input, Modal, Popover } from 'flowbite-svelte';
     import { createEventDispatcher } from 'svelte';
     import { supabase } from '$lib/supabaseClient';
+    import { goto } from '$app/navigation';
 
     const dispatch = createEventDispatcher();
 
@@ -26,6 +27,8 @@
             console.error('Login error:', error.message);
         } else {
             console.log('Successfully signed in!', data);
+            console.log('Attempting to redirect...');
+            console.log('Redirect should have occurred.');
         }
     }
 
@@ -35,7 +38,6 @@
 <Section name="login">
     <Register href="/">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <form class="flex flex-col space-y-6" action="/">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Login</h3>
 
             <Label class="space-y-2">
@@ -57,7 +59,6 @@
                 <Button type="button" color="alternative" class="w-1/2"  on:click={toggleToSignUp}>Sign Up</Button>
                 <Button type="button" class="w-1/2" on:click={signIn}>Sign In</Button>
             </div>
-        </form>
         </div>
     </Register>
 </Section>

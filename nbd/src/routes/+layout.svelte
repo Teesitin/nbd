@@ -2,7 +2,7 @@
     import '../app.css';
     import NavBar from "$lib/components/NavBar.svelte";
 
-	import { invalidate } from '$app/navigation'
+	import { goto, invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
 	export let data
@@ -15,6 +15,7 @@
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth')
 			}
+			// goto("http://localhost:5173/account/main");
 		})
 
 		return () => data.subscription.unsubscribe()

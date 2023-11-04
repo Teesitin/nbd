@@ -3,6 +3,8 @@
     import { Button, Checkbox, Label, Input, Modal, Popover } from 'flowbite-svelte';
     import { createEventDispatcher } from 'svelte';
     import { supabase } from '$lib/supabaseClient';
+    import { goto } from '$app/navigation';
+
 
 
     const dispatch = createEventDispatcher();
@@ -55,22 +57,6 @@
             errorMessage = 'Password must be at least 6 characters long';
             return;
         }
-
-        // const doc = {
-        //     username,
-        //     full_name,
-        //     avatar_url,
-        //     website
-        // };
-
-        // let { data, error } = await supabase.from('profiles').insert([doc]);
-        //     if (error) {
-        //         console.error("Error inserting data:", error);
-        //     } else {
-        //         console.log("Data inserted:", data);
-        //         location.reload();
-        // }
-    
 
         let { data, error } = await (supabase as any).auth.signUp({
             email,

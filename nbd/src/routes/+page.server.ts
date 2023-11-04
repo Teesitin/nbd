@@ -1,14 +1,14 @@
-// // src/routes/+page.server.ts
-// import { redirect } from '@sveltejs/kit'
-// import type { PageServerLoad } from './$types'
+// src/routes/+page.server.ts
+import { redirect } from '@sveltejs/kit'
+import type { PageServerLoad } from './$types'
 
-// export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
-//   const session = await getSession()
+export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
+  const session = await getSession()
 
-//   // if the user is already logged in return them to the account page
-//   if (session) {
-//     throw redirect(303, '/account')
-//   }
+  // if the user is already logged in return them to the account page
+  if (session) {
+    throw redirect(303, '/account/main')
+  }
 
-//   return { url: url.origin }
-// }
+  return { url: url.origin }
+}
