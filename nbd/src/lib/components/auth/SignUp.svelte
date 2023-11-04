@@ -11,15 +11,21 @@
         dispatch('toggle', { newLoginState: true });
     }
 
-    // Variables
+    // SignUp Variables
     let email = '';
-    let username = '';
-    let fullName = '';
-    let avatarUrl = '';
     let password = '';
     let passwordStrength = '';
-
     let errorMessage: string = '';
+
+    // Profile Var
+    let username = '';
+    let full_name = '';
+    let avatar_url = '';
+    let website = '';
+
+    // Functions
+
+
 
 
     function checkPasswordStrength(pass: string) {
@@ -50,7 +56,23 @@
             return;
         }
 
-        const { data, error } = await (supabase as any).auth.signUp({
+        const doc = {
+            username,
+            full_name,
+            avatar_url,
+            website
+        };
+
+        // let { data, error } = await supabase.from('profiles').insert([doc]);
+        //     if (error) {
+        //         console.error("Error inserting data:", error);
+        //     } else {
+        //         console.log("Data inserted:", data);
+        //         location.reload();
+        // }
+    
+
+        let { data, error } = await (supabase as any).auth.signUp({
             email,
             password,
             options: {
@@ -95,12 +117,12 @@
 
             <Label class="space-y-2">
                 <span>Full Name</span>
-                <Input type="text" name="fullName" placeholder="" bind:value={fullName}/>
+                <Input type="text" name="fullName" placeholder="" bind:value={full_name}/>
             </Label>
 
             <Label class="space-y-2">
                 <span>Avatar URL</span>
-                <Input type="url" name="avatarUrl" id="password" placeholder="" bind:value={avatarUrl}/>
+                <Input type="url" name="avatar_url" id="password" placeholder="" bind:value={avatar_url}/>
             </Label>
 
             <div class="flex gap-6">
