@@ -56,12 +56,12 @@
             return;
         }
 
-        const doc = {
-            username,
-            full_name,
-            avatar_url,
-            website
-        };
+        // const doc = {
+        //     username,
+        //     full_name,
+        //     avatar_url,
+        //     website
+        // };
 
         // let { data, error } = await supabase.from('profiles').insert([doc]);
         //     if (error) {
