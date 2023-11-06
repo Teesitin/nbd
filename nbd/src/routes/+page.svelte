@@ -1,5 +1,6 @@
 <script lang="ts">
     import HeroSearch from "$lib/components/HeroSearch.svelte";
+    import Mission from "$lib/components/Mission.svelte";
 </script>
 
 <svelte:head>
@@ -7,3 +8,4 @@
 </svelte:head>
 
 <HeroSearch/>
+<Mission/>
