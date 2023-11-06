@@ -15,6 +15,7 @@
       <NavLi href="/donate" class="text-scorpion-950">Donate</NavLi>
       <NavLi href="/faq" class="text-scorpion-950">FAQ</NavLi>
       <NavLi href="/login" class="text-scorpion-950">Login</NavLi>
+      <NavLi href="/account/main" class="text-scorpion-950">Account Demo</NavLi>
       <DarkMode />
     </NavUl>
 </Navbar>
