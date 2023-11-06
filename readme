@@ -1,1 +1,27 @@
-Don't read this
+# Nothing But Docs
+
+## Description
+
+Nothing But Docs is a centralized platform for managing and organizing software documentation. Our mission is to streamline the documentation process, making it accessible and user-friendly for developers and contributors alike.
+
+## Features
+
+- **User-Friendly Interface**: Easy navigation through documentation.
+- **Collaboration-Friendly**: Tools and features that encourage collaboration on document creation and editing.
+- **Open Source**: The entire codebase is available for community contributions.
+- **Documentation Versioning**: Keep track of different versions of your documentation.
+
+## Technology Stack
+
+- Svelte
+- Tailwind CSS
+- Node.js
+- Supabase
+
+## Installation
+
+```bash
+git clone https://github.com/yourusername/nothing-but-docs.git
+cd nothing-but-docs
+npm install
+npm run dev
