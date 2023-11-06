@@ -14,14 +14,14 @@
     <BlogHead>
       <svelte:fragment slot="h2">The Team Behind Nothing But Docs</svelte:fragment>
       <svelte:fragment slot="paragraph">
-        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">They say there is no 'i' in team.</p>
+        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Apple was founded by 3 people, Microsoft - 2, and Google - 2.</p>
       </svelte:fragment>
     </BlogHead>
 
     <div>
       <Card reverse={vCard} class="mb-4 m-auto">
         <div class="max-w-4xl">
-          <Carousel {images} duration={3000} let:Indicators class="">
+          <Carousel {images} duration={3000} let:Indicators class="max-h-[300px]">
             <Indicators />
           </Carousel>
         </div>

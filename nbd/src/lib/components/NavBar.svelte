@@ -4,13 +4,14 @@
 </script>
 
 
-<Navbar let:hidden let:toggle rounded color="form" class="bg-transparent text-scorpion-950  dark:bg-scorpion-950">
+<Navbar class="bg-transparent text-scorpion-950  dark:bg-scorpion-950">
     <NavBrand href="/">
-
       <span class="whitespace-nowrap text-xl font-semibold ">NBD</span>
     </NavBrand>
-    <NavHamburger on:click={toggle} />
-    <NavUl {hidden} class="flex items-center">
+
+    <NavHamburger/>
+
+    <NavUl>
       <NavLi href="/" active={true} class="text-scorpion-950">Home</NavLi>
       <NavLi href="/about" class="text-scorpion-950">About</NavLi>
       <NavLi href="/donate" class="text-scorpion-950">Donate</NavLi>
@@ -18,6 +19,5 @@
       <NavLi href="/login" class="text-scorpion-950">Login</NavLi>
 
       <DarkMode />
-
     </NavUl>
 </Navbar>
