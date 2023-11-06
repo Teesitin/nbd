@@ -2,36 +2,44 @@
     import { Section, ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper, BlogHead, BlogBodyWrapper } from 'flowbite-svelte-blocks';
     import { VideoSolid, ArrowRightOutline, NewspaperSolid } from 'flowbite-svelte-icons';
 
-    import { Card, Button, Toggle } from 'flowbite-svelte';
-    import { Carousel } from 'flowbite-svelte';
 
-    let vCard = false;
-    let images = [{ alt: 'DeLayne Russell', srcset: '/about/2.webp' },{ alt: 'DeLayne Russell', srcset: '/about/1.webp' },{ alt: 'DeLayne Russell', srcset: '/about/3.webp' }];
+
+    import {  TeamWrapper, TeamHeader, TeamBody, TeamItem, Facebook, Github, Twitter } from 'flowbite-svelte-blocks';
+    let members = [
+        {
+            href: '/',
+            src: '/about/3-square.webp',
+            alt: 'DeLayne Russell',
+            name: 'DeLayne Russell',
+            jobTitle: 'CEO & Web Developer',
+            description: 'His biggest Dream is to complete this site. He likes Corned Beef and Cabbage.'
+        }
+    ];
 
   </script>
   
-  <Section name="blog">
-    <BlogHead>
-      <svelte:fragment slot="h2">The Team Behind Nothing But Docs</svelte:fragment>
-      <svelte:fragment slot="paragraph">
-        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Apple was founded by 3 people, Microsoft - 2, and Google - 2.</p>
-      </svelte:fragment>
-    </BlogHead>
 
-    <div>
-      <Card reverse={vCard} class="mb-4 m-auto">
-        <div class="max-w-4xl">
-          <Carousel {images} duration={3000} let:Indicators class="max-h-[300px]">
-            <Indicators />
-          </Carousel>
-        </div>
 
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">DeLayne Russell</h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">His biggest Dream is to complete this site. He likes Corned Beef and Cabbage.</p>
-        <Button>
-          Read more <ArrowRightOutline class="w-3.5 h-3.5 ml-2 text-white" />
-        </Button>
-      </Card>
-  </div>
 
-  </Section>
+
+    
+<Section name="team">
+  <TeamWrapper>
+    <TeamHeader>
+      <svelte:fragment slot="label">The Team Behind Nothing But Docs</svelte:fragment>
+      <p class="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">A dedicated team full of dedicated people</p>
+    </TeamHeader>
+    <TeamBody>
+      {#each members as { href, src, alt, name, jobTitle, description }}
+        <TeamItem {href} {src} {alt} {name} {jobTitle} imgClass="w-96 aspect-square">
+          <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
+            {description}
+          </p>
+          <svelte:fragment slot="social">
+            <Github href="https://github.com/Teesitin" />
+          </svelte:fragment>
+        </TeamItem>
+      {/each}
+    </TeamBody>
+  </TeamWrapper>
+</Section>

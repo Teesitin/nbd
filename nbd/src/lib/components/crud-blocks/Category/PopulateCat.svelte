@@ -1,4 +1,5 @@
 <script>
+    import { Section } from "flowbite-svelte-blocks";
     import CategoryCard from "./CategoryCard.svelte";
   
     let categories = [
@@ -57,8 +58,8 @@
     ];
 </script>
 
-<div class="grid gap-4 grid-cols-1 grid-rows-3 md:grid-cols-2 xl:grid-cols-3 m-auto max-w-6xl ">
-    {#each categories as category}
-        <CategoryCard categoryTitle={category.categoryTitle} categoryDesc={category.categoryDesc}/>
-    {/each}
-</div>
+    <div class="grid gap-4 grid-cols-1 grid-rows-3 md:grid-cols-2 xl:grid-cols-3 m-auto max-w-6xl mb-[115px]">
+        {#each categories as category}
+            <CategoryCard categoryTitle={category.categoryTitle} categoryDesc={category.categoryDesc}/>
+        {/each}
+    </div>
