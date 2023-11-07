@@ -1,7 +1,8 @@
 <script lang="ts">
     import { createClient } from '@supabase/supabase-js';
     import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
+    import { writable, get } from 'svelte/store';
+
     import { Modal, Label, Input, Checkbox } from 'flowbite-svelte';
     import { Textarea } from 'flowbite-svelte';
     import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch } from 'flowbite-svelte';
@@ -12,6 +13,7 @@
     import { ChevronDownOutline } from 'flowbite-svelte-icons';
     import { Popover } from 'flowbite-svelte';
 
+    // Variables
     let formModal = false;
     let title = '';
     let description = '';
@@ -34,6 +36,7 @@
     let editTags = '';
     let editCategory = '';
 
+    // Functions
     async function addDoc(event: Event) {
         const doc = {
             title,
@@ -97,15 +100,38 @@
     }
 
     let searchTerm = '';
-    $: filteredItems = data.filter((data) => data.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1);
 
-    let uniqueCategories = [''];
+    const categorySet: Set<string> = new Set();
+    let uniqueCategories: string[];
+    const toggledCategories = writable(new Set<string>());
 
     function getUniqueCategories(data: any[]) {
-        const categorySet = new Set();
-        data.forEach(doc => categorySet.add(doc.category));
-        uniqueCategories = [...categorySet];
+        data.forEach(doc => {
+            if (doc.category && typeof doc.category === 'string') {
+                categorySet.add(doc.category);
+            }
+        });
+        uniqueCategories = Array.from(categorySet);
+        console.log(uniqueCategories);
     }
+
+    function handleCategoryChange(category: string, checked: boolean) {
+        const currentSet = get(toggledCategories);
+        if (checked) {
+            currentSet.add(category);
+        } else {
+            currentSet.delete(category);
+        }
+        toggledCategories.set(new Set(currentSet));
+        console.log(Array.from(get(toggledCategories)));
+    }
+
+    $: filteredItems = data.filter(item => {
+        const bySearchTerm = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+        if ($toggledCategories.size === 0) return bySearchTerm;
+        return bySearchTerm && $toggledCategories.has(item.category);
+    });
 
     onMount(async () => {
         const { data: fetchedData, error } = await supabase.from('doc_data').select();
@@ -114,7 +140,6 @@
         } else {
             data = fetchedData;
             getUniqueCategories(data);
-            console.log(uniqueCategories);
         }
     });
 
@@ -147,26 +172,18 @@
 
         <Dropdown class="w-48 p-2 text-sm">
             <h6 class="mb-3 ml-1 text-sm font-medium text-gray-900 dark:text-white">Category</h6>
-            
-            <li class="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-              <Checkbox>Apple (56)</Checkbox>
-            </li>
-            <li class="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-              <Checkbox>Fitbit (56)</Checkbox>
-            </li>
-            <li class="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-              <Checkbox checked>Dell (56)</Checkbox>
-            </li>
-            <li class="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-              <Checkbox>Asus (97)</Checkbox>
-            </li>
-
-            {#each data as row, index}
+            {#each uniqueCategories as category}
                 <li class="rounded p-1 hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <Checkbox>{data}</Checkbox>
+                    <Checkbox
+                        checked={false}
+                        on:change="{(e) => handleCategoryChange(category, e.target.checked)}"
+                    >
+                        {category}
+                    </Checkbox>
                 </li>           
             {/each}
-          </Dropdown>
+        </Dropdown>
+        
 
     </TableHeader>
 
