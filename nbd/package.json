@@ -36,6 +36,7 @@
 		"@supabase/auth-ui-shared": "^0.1.8",
 		"@supabase/auth-ui-svelte": "^0.2.8",
 		"@supabase/supabase-js": "^2.38.4",
+		"apexcharts": "^3.44.0",
 		"iconify-icon": "^1.0.8",
 		"prettier": "^3.0.3"
 	}

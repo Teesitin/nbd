@@ -8,6 +8,7 @@
     import Messages from '$lib/components/crud-blocks/Messages.svelte';
     import Settings from '$lib/components/crud-blocks/Settings.svelte';
     import Profile from '$lib/components/crud-blocks/Profile.svelte';
+    import ProfileNew from '$lib/components/crud-blocks/ProfileNew.svelte';
     let currentComponent: string = 'Table';
 
     import { BottomNav, BottomNavItem, Tooltip, Skeleton, ImagePlaceholder } from 'flowbite-svelte';
@@ -23,7 +24,7 @@
 {:else if currentComponent === 'Reviews'}
     <Reviews />
 {:else if currentComponent === 'Profile'}
-    <Profile />
+    <ProfileNew />
 {:else if currentComponent === 'Settings'}
     <Settings />
 {/if}
