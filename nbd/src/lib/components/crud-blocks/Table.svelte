@@ -1,15 +1,13 @@
 <script lang="ts">
-    import { createClient } from '@supabase/supabase-js';
     import { onMount } from 'svelte';
     import { writable, get } from 'svelte/store';
 
     import { Modal, Label, Input, Checkbox } from 'flowbite-svelte';
     import { Textarea } from 'flowbite-svelte';
-    import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch } from 'flowbite-svelte';
-    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+    import { Button, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
     import { Section, TableHeader } from 'flowbite-svelte-blocks';
-    import { Heading, P, Search, Dropdown, DropdownItem, DropdownDivider } from 'flowbite-svelte';
+    import { Search, Dropdown, DropdownItem, DropdownDivider } from 'flowbite-svelte';
     import { ChevronDownOutline } from 'flowbite-svelte-icons';
     import { Popover } from 'flowbite-svelte';
 
@@ -22,7 +20,6 @@
     let ratingComment = '';
     let tags = '';
     let category = '';
-    const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     let data: any[] = [];
     let enablePopover = true;
     let deleteModal = false;
@@ -47,13 +44,7 @@
             tags,
             category
         };
-        const { data, error } = await supabase.from('doc_data').insert([doc]);
-        if (error) {
-            console.error("Error inserting data:", error);
-        } else {
-            console.log("Data inserted:", data);
-            location.reload();
-        }
+
     }
 
     function loadEditData(doc: { id: any; title: string; description: string; url_link: string; rating: number | null; rating_comment: string; tags: string; category: string; }) {
@@ -81,22 +72,10 @@
 
         console.log(updatedDoc);
 
-        const { data: updatedData, error } = await supabase.from('doc_data').update(updatedDoc).eq('id', editId);
-        if (error) {
-            console.error("Error updating data:", error);
-        } else {
-            const index = data.findIndex(doc => doc.id === editId);
-            location.reload();
-        }
     }
 
     async function removeDoc() {
-        const { error } = await supabase.from('doc_data').delete().eq('id', editId);
-        if (error) {
-            console.error("Error deleting data:", error);
-        } else {
-            location.reload();
-        }
+
     }
 
     let searchTerm = '';
@@ -134,13 +113,7 @@
     });
 
     onMount(async () => {
-        const { data: fetchedData, error } = await supabase.from('doc_data').select();
-        if (error) {
-            console.error("Error fetching data:", error);
-        } else {
-            data = fetchedData;
-            getUniqueCategories(data);
-        }
+
     });
 
 </script>

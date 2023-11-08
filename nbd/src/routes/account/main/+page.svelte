@@ -1,18 +1,13 @@
-<script lang="ts">import { page } from '$app/stores';
-    import { Section, SidebarBottomNav, SidebarBottomNavItem } from 'flowbite-svelte-blocks';
-    import { Button, Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownItem, SidebarDropdownWrapper, Dropdown, DropdownItem } from 'flowbite-svelte';
-
+<script lang="ts">
     import PopulateCat from '$lib/components/crud-blocks/Category/PopulateCat.svelte';
     import Table from '$lib/components/crud-blocks/Table.svelte';
     import Reviews from '$lib/components/crud-blocks/Reviews.svelte';
-    import Messages from '$lib/components/crud-blocks/Messages.svelte';
     import Settings from '$lib/components/crud-blocks/Settings.svelte';
-    import Profile from '$lib/components/crud-blocks/Profile.svelte';
     import ProfileNew from '$lib/components/crud-blocks/ProfileNew.svelte';
     let currentComponent: string = 'Table';
 
-    import { BottomNav, BottomNavItem, Tooltip, Skeleton, ImagePlaceholder } from 'flowbite-svelte';
-  import { HomeSolid, WalletSolid, AdjustmentsVerticalOutline, UserCircleSolid, PlusSolid, TableColumnOutline, FolderDuplicateOutline, TableColumnSolid, FolderDuplicateSolid, StarHalfStrokeSolid } from 'flowbite-svelte-icons';
+    import { BottomNav, BottomNavItem, Tooltip } from 'flowbite-svelte';
+    import { AdjustmentsVerticalOutline, UserCircleSolid, TableColumnSolid, FolderDuplicateSolid, StarHalfStrokeSolid } from 'flowbite-svelte-icons';
 </script>
     
 

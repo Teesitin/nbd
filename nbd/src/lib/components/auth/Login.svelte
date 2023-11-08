@@ -1,9 +1,7 @@
 <script lang="ts">
     import { Section, Register } from 'flowbite-svelte-blocks';
-    import { Button, Checkbox, Label, Input, Modal, Popover } from 'flowbite-svelte';
+    import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
     import { createEventDispatcher } from 'svelte';
-    import { supabase } from '$lib/supabaseClient';
-    import { goto } from '$app/navigation';
 
     const dispatch = createEventDispatcher();
 
@@ -12,24 +10,12 @@
 
 
     function toggleToSignUp() {
-    dispatch('toggle', { newLoginState: false });
+        dispatch('toggle', { newLoginState: false });
     }
 
 
 // Sign In
     async function signIn() {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
-
-        if (error) {
-            console.error('Login error:', error.message);
-        } else {
-            console.log('Successfully signed in!', data);
-            console.log('Attempting to redirect...');
-            console.log('Redirect should have occurred.');
-        }
     }
 
 

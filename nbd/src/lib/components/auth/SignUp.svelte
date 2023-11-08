@@ -1,9 +1,7 @@
 <script lang="ts">
     import { Section, Register } from 'flowbite-svelte-blocks';
-    import { Button, Checkbox, Label, Input, Modal, Popover } from 'flowbite-svelte';
+    import { Button, Label, Input } from 'flowbite-svelte';
     import { createEventDispatcher } from 'svelte';
-    import { supabase } from '$lib/supabaseClient';
-    import { goto } from '$app/navigation';
 
 
 
@@ -51,26 +49,7 @@
 
     // Sign Up
     async function signUpNewUser() {
-        errorMessage = '';
 
-        if (password.length < 6) {
-            errorMessage = 'Password must be at least 6 characters long';
-            return;
-        }
-
-        let { data, error } = await (supabase as any).auth.signUp({
-            email,
-            password,
-            options: {
-            redirectTo: '/account/main'
-            }
-        }); 
-    
-        if (error) {
-            console.error('Error signing up:', error);
-        } else {
-            console.log('Success! Check your email for the confirmation link.', data);
-        }
     }
 </script>
 
