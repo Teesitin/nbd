@@ -26,5 +26,5 @@
 
 
 <Modal title="{categoryTitle}" bind:open={clickOutsideModal} autoclose outsideclose size = 'xl'>
-    <TableLim catagoryFilter = {categoryTitle}/>
+    <!-- <TableLim catagoryFilter = {categoryTitle}/> -->
 </Modal>
