@@ -7,6 +7,25 @@
     import { Label, Input, Select, Textarea } from 'flowbite-svelte';
     import { Img } from 'flowbite-svelte';
 
+    import { Modal } from 'flowbite-svelte';
+    import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+    let popupModal = false;    
+
+  import { goto } from '$app/navigation';
+  import { signOut } from 'firebase/auth';
+  import { firebaseAuth } from '$lib/firebase';
+  import { authUser } from '$lib/authStore';
+ 
+  const handleLogout = () => {
+    signOut(firebaseAuth)
+      .then(() => {
+        $authUser = undefined;
+        goto('/login');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
     const handleSubmit = () => {
         alert('Form submited.');
@@ -144,7 +163,7 @@ function updateAchiementTags() {
         <Button type="submit" class="w-36">Update Profile</Button>
       </div>
     </form>
-  </Section>
+</Section>
 
 
 <Card padding="xl" class="m-auto mb-32">
@@ -165,3 +184,14 @@ function updateAchiementTags() {
         
     </List>
 </Card>
+
+<Button on:click={() => (popupModal = true)}>Log Out</Button>
+
+<Modal bind:open={popupModal} size="xs" autoclose>
+  <div class="text-center">
+    <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
+    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Ready to Log Out?</h3>
+    <Button class="mr-2" on:click = {handleLogout}>Log Out</Button>
+    <Button color="alternative">Nope</Button>
+  </div>
+</Modal>
