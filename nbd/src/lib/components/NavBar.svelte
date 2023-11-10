@@ -1,6 +1,8 @@
 <script>
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
     import { DarkMode } from 'flowbite-svelte';
+
+    import { authUser } from '$lib/authStore';
 </script>
 
 <Navbar class="bg-transparent text-scorpion-950  dark:bg-scorpion-950">
@@ -14,8 +16,11 @@
       <NavLi href="/about" class="text-scorpion-950">About</NavLi>
       <NavLi href="/donate" class="text-scorpion-950">Donate</NavLi>
       <NavLi href="/faq" class="text-scorpion-950">FAQ</NavLi>
-      <NavLi href="/login" class="text-scorpion-950">Login</NavLi>
-      <NavLi href="/account/main" class="text-scorpion-950">Account Demo</NavLi>
+      {#if !$authUser}
+        <NavLi href="/login" class="text-scorpion-950">Login</NavLi>
+      {:else}
+        <NavLi href="/account/main" class="text-scorpion-950">Account</NavLi>
+      {/if}
       <DarkMode />
     </NavUl>
 </Navbar>

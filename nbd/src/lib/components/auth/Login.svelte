@@ -42,7 +42,7 @@
         signInWithPopup(firebaseAuth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
+                if (credential) { const token = credential.accessToken;}
                 const user = result.user;
 
             }).catch((error) => {
@@ -64,7 +64,6 @@
             });
         })();
     });
-
 </script>
 
 <Section name="login">
