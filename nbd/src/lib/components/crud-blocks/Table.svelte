@@ -11,6 +11,33 @@
     import { ChevronDownOutline } from 'flowbite-svelte-icons';
     import { Popover } from 'flowbite-svelte';
 
+    import { authUser } from '$lib/authStore';
+
+
+    import { collection, addDoc, query, getDocs } from 'firebase/firestore';
+    import { firebaseApp, firebaseAuth } from '$lib/firebase';
+    import { db } from '$lib/firebase';
+
+    interface DocData {
+        id: string;
+        title: string;
+        description: string;
+        url_link: string;
+        rating: number | null;
+        rating_comment: string;
+        tags: string;
+        category: string;
+    }
+
+    
+    onMount(async () => {
+        const docDataCollectionRef = await getDocs(collection(db, "docData"));
+    
+        docDataCollectionRef.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        });
+    });
+
     // Variables
     let formModal = false;
     let title = '';
@@ -20,7 +47,6 @@
     let ratingComment = '';
     let tags = '';
     let category = '';
-    let data: any[] = [];
     let enablePopover = true;
     let deleteModal = false;
     let editModal = false;
@@ -33,19 +59,45 @@
     let editTags = '';
     let editCategory = '';
 
-    // Functions
-    async function addDoc(event: Event) {
-        const doc = {
-            title,
-            description,
-            url_link: urlLink,
-            rating,
-            rating_comment: ratingComment,
-            tags,
-            category
-        };
+async function addDocToFirestore(event: Event) {
+    event.preventDefault();
 
+    // Ensure the user is logged in and get their UID
+    const user = firebaseAuth.currentUser;
+    if (!user) {
+        console.error("User must be logged in to add documents.");
+        return;
     }
+
+    const docData = {
+        owner: user.uid, // Add the user's UID as the 'owner' field
+        title,
+        desc: description, // Assuming 'desc' is the field name in Firestore
+        url: urlLink,
+        rating,
+        ratingComment,
+        tags,
+        category
+    };
+
+    try {
+        const docRef = await addDoc(docDataCollectionRef, docData);
+        console.log("Document added with ID: ", docRef.id);
+        formModal = false;
+        
+        // Clear the form fields after successful submission
+        title = '';
+        description = '';
+        urlLink = '';
+        rating = null;
+        ratingComment = '';
+        tags = '';
+        category = '';
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+
 
     function loadEditData(doc: { id: any; title: string; description: string; url_link: string; rating: number | null; rating_comment: string; tags: string; category: string; }) {
         editId = doc.id;
@@ -105,19 +157,16 @@
         console.log(Array.from(get(toggledCategories)));
     }
 
-    $: filteredItems = data.filter(item => {
-        const bySearchTerm = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    // $: filteredItems = data.filter(item => {
+    //     const bySearchTerm = item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-        if ($toggledCategories.size === 0) return bySearchTerm;
-        return bySearchTerm && $toggledCategories.has(item.category);
-    });
+    //     if ($toggledCategories.size === 0) return bySearchTerm;
+    //     return bySearchTerm && $toggledCategories.has(item.category);
+    // });
 
-    onMount(async () => {
-
-    });
 
 </script>
-
+<!-- 
 <Section name="tableheader" sectionClass="bg-slate-50 dark:bg-transparent h-fit	 flex py-8 ">
     <TableHeader headerType="search">
         <Search slot="search" size="md" bind:value={searchTerm} />
@@ -292,4 +341,4 @@
         <Button color="red" on:click={removeDoc} class="mr-2">Yes, I'm sure</Button>
         <Button color="alternative">No, cancel</Button>
     </div>
-</Modal>
+</Modal> -->
