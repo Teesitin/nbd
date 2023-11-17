@@ -27,7 +27,7 @@
   <Settings />
 {/if}
 
-<BottomNav position="fixed" navType="application" classInner="grid-cols-5">
+<BottomNav position="fixed" navType="application" classInner="grid-cols-5" outerClass="w-full z-20 border-gray-200 dark:bg-gray-700 dark:border-gray-600">
   <BottomNavItem  appBtnPosition="left" on:click={() => currentComponent = 'Table'}>
       <TableColumnSolid class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
       <Tooltip arrow={false}>Table</Tooltip>

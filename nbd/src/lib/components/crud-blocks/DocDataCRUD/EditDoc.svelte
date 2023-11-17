@@ -96,7 +96,7 @@ function openEditModal() {
 <a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">Edit Doc</a>
 
 <Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
-    <form on:submit|preventDefault={editDocSubmit}>
+    <form on:submit={editDocSubmit}>
         <div class="grid gap-4 mb-4">
 
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Document</h3>

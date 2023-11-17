@@ -27,7 +27,8 @@
                 ratingComment: ratingComment,
                 tags: tags,
                 category: category,
-                owner: $authUser.uid
+                owner: $authUser.uid,
+                id: ''
             };
 
             try {
@@ -60,12 +61,12 @@
 
 </script>
 
-<div class="flex justify-center m-5">
+<div class="flex justify-center">
     <Button on:click={() => (defaultModal = true)}>Add Doc</Button>
 </div>
 
-<Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
-    <form on:submit|preventDefault={addDocSubmit}>
+<Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full z-50">
+    <form on:submit={addDocSubmit}>
         <div class="grid gap-4 mb-4">
 
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Document</h3>
