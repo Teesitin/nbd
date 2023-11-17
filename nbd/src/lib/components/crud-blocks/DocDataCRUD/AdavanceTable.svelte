@@ -25,7 +25,7 @@
             id: doc.id
         }));
         firestoreData.set(docs);
-        renderPagination(docs.length);
+        renderPagination(totalItems);
     });
 
 // Table Data
@@ -42,53 +42,56 @@
     const showPage = 5;
     let totalPages = 0;
     let pagesToShow:any = [];
-    let totalItems = paginationData.length;
+    let totalItems = 0;
+    $: totalItems = $firestoreData.length;
     let startPage:any;
     let endPage:any;
   
     const updateDataAndPagination = () => {
-      const currentPageItems = paginationData.slice(currentPosition, currentPosition + itemsPerPage);
-      renderPagination(currentPageItems.length);
+        renderPagination(totalItems);
     }
   
     const loadNextPage = () => {
-      if (currentPosition + itemsPerPage < paginationData.length) {
+    if (currentPosition + itemsPerPage < totalItems) {
         currentPosition += itemsPerPage;
         updateDataAndPagination();
-      }
     }
-  
+}
+
     const loadPreviousPage = () => {
-      if (currentPosition - itemsPerPage >= 0) {
-        currentPosition -= itemsPerPage;
+        if (currentPosition - itemsPerPage >= 0) {
+            currentPosition -= itemsPerPage;
+            updateDataAndPagination();
+        }
+    }
+
+    const goToPage = (pageNumber: number) => {
+        currentPosition = (pageNumber - 1) * itemsPerPage;
         updateDataAndPagination();
-      }
     }
+
   
-    const renderPagination = (/** @type {number} */ totalItems: number) => {
-      totalPages = Math.ceil(paginationData.length / itemsPerPage);
-      const currentPage = Math.ceil((currentPosition + 1) / itemsPerPage);
-  
-      startPage = currentPage - Math.floor(showPage / 2);
-      startPage = Math.max(1, startPage);
-      endPage = Math.min(startPage + showPage - 1, totalPages);
-  
-      pagesToShow = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    const renderPagination = (totalItems: number) => {
+        totalPages = Math.ceil(totalItems / itemsPerPage);
+        const currentPage = Math.ceil((currentPosition + 1) / itemsPerPage);
+
+        startPage = currentPage - Math.floor(showPage / 2);
+        startPage = Math.max(1, startPage);
+        endPage = Math.min(startPage + showPage - 1, totalPages);
+
+        pagesToShow = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     }
-  
-    const goToPage = (/** @type {number} */ pageNumber: number) => {
-      currentPosition = (pageNumber - 1) * itemsPerPage;
-      updateDataAndPagination();
-    }
+
   
     $: startRange = currentPosition + 1;
     $: endRange = Math.min(currentPosition + itemsPerPage, totalItems);
     
     $: currentPageItems = $firestoreData.slice(currentPosition, currentPosition + itemsPerPage);
     $: filteredItems = $firestoreData.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
   </script>
   
-<Section name="tableheader" classSection='bg-gray-50 dark:bg-gray-900 p-3 sm:p-5'>
+<Section name="tableheader" classSection='bg-transparent p-3 sm:p-5'>
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput}>
         <div slot="header" class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
 
@@ -126,7 +129,7 @@
 
         <TableBody>
             {#if searchTerm !== ''}
-            {#each filteredItems as item (item.id)}
+            {#each $filteredItems as item (item.id)}
             <TableBodyRow>
                 <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
@@ -137,7 +140,7 @@
             </TableBodyRow>
             {/each}
             {:else}
-            {#each currentPageItems as item (item.id)}
+            {#each $currentPageItems as item (item.id)}
             <TableBodyRow>
                 <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
