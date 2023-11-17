@@ -129,7 +129,7 @@
 
         <TableBody>
             {#if searchTerm !== ''}
-            {#each $filteredItems as item (item.id)}
+            {#each filteredItems as item (item.id)}
             <TableBodyRow>
                 <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
@@ -140,7 +140,7 @@
             </TableBodyRow>
             {/each}
             {:else}
-            {#each $currentPageItems as item (item.id)}
+            {#each currentPageItems as item (item.id)}
             <TableBodyRow>
                 <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
