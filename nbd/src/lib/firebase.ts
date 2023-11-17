@@ -4,7 +4,6 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import type { FirebaseApp } from 'firebase/app';
 
-
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_APIKEY,
     authDomain: import.meta.env.VITE_AUTHDOMAIN,
@@ -19,9 +18,9 @@ const firebaseConfig = {
 let firebaseApp: FirebaseApp;
 
 if (!getApps().length) {
-    firebaseApp = initializeApp(firebaseConfig) as FirebaseApp;
+    firebaseApp = initializeApp(firebaseConfig);
 } else {
-    firebaseApp = getApps()[0] as FirebaseApp;
+    firebaseApp = getApps()[0];
 }
 
 // Auth
@@ -30,6 +29,5 @@ const provider = new GoogleAuthProvider();
 
 // Firestore Database
 const db = getFirestore(firebaseApp);
-
 
 export { firebaseApp, firebaseAuth, provider, db };

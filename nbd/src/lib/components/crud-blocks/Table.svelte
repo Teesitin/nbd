@@ -17,25 +17,23 @@
     import { collection, addDoc, query, getDocs } from 'firebase/firestore';
     import { firebaseApp, firebaseAuth } from '$lib/firebase';
     import { db } from '$lib/firebase';
-
-    interface DocData {
-        id: string;
-        title: string;
-        description: string;
-        url_link: string;
-        rating: number | null;
-        rating_comment: string;
-        tags: string;
-        category: string;
-    }
+    import type { DocData } from '$lib/docData.ts';
 
     
+    const data = writable<DocData[]>([]);
+
     onMount(async () => {
-        const docDataCollectionRef = await getDocs(collection(db, "docData"));
-    
-        docDataCollectionRef.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        });
+        const collectionRef = collection(db, 'docData');
+        const querySnapshot = await getDocs(collectionRef);
+        console.log(querySnapshot);
+        const docsArray: DocData[] = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data() as DocData
+        }));
+
+        data.set(docsArray);
+
+        console.log(data);
     });
 
     // Variables
@@ -59,44 +57,7 @@
     let editTags = '';
     let editCategory = '';
 
-async function addDocToFirestore(event: Event) {
-    event.preventDefault();
-
-    // Ensure the user is logged in and get their UID
-    const user = firebaseAuth.currentUser;
-    if (!user) {
-        console.error("User must be logged in to add documents.");
-        return;
-    }
-
-    const docData = {
-        owner: user.uid, // Add the user's UID as the 'owner' field
-        title,
-        desc: description, // Assuming 'desc' is the field name in Firestore
-        url: urlLink,
-        rating,
-        ratingComment,
-        tags,
-        category
-    };
-
-    try {
-        const docRef = await addDoc(docDataCollectionRef, docData);
-        console.log("Document added with ID: ", docRef.id);
-        formModal = false;
-        
-        // Clear the form fields after successful submission
-        title = '';
-        description = '';
-        urlLink = '';
-        rating = null;
-        ratingComment = '';
-        tags = '';
-        category = '';
-    } catch (e) {
-        console.error("Error adding document: ", e);
-    }
-}
+// 4
 
 
     function loadEditData(doc: { id: any; title: string; description: string; url_link: string; rating: number | null; rating_comment: string; tags: string; category: string; }) {
@@ -130,6 +91,37 @@ async function addDocToFirestore(event: Event) {
 
     }
 
+
+    async function addDocToFirestore() {
+        const newDoc: DocData = {
+            title: title,
+            desc: description,
+            url: urlLink,
+            rating: rating || 0,
+            ratingComment: ratingComment,
+            tags: tags,
+            category: category,
+            owner: ''
+        };
+
+        try {
+            const docRef = await addDoc(collection(db, 'docData'), newDoc);
+            console.log('Document written with ID: ', docRef.id);
+            data.update(currentDocs => [...currentDocs, {...newDoc, id: docRef.id}]);
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
+    }
+
+    // Call this function on form submit
+    async function addDocSubmit(event: { preventDefault: () => void; }) {
+        event.preventDefault();
+        addDocToFirestore();
+    }
+
+
+
+
     let searchTerm = '';
 
     const categorySet: Set<string> = new Set();
@@ -157,16 +149,28 @@ async function addDocToFirestore(event: Event) {
         console.log(Array.from(get(toggledCategories)));
     }
 
-    // $: filteredItems = data.filter(item => {
-    //     const bySearchTerm = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+import { derived } from 'svelte/store';
 
-    //     if ($toggledCategories.size === 0) return bySearchTerm;
-    //     return bySearchTerm && $toggledCategories.has(item.category);
-    // });
+// ... other imports and code
+
+// Define a derived store for filtered items
+const filteredItems = derived(
+    [data, toggledCategories, searchTerm],
+    ([$data, $toggledCategories, $searchTerm]) => {
+        return $data.filter((item: { title: string; category: any; }) => {
+            const bySearchTerm = !$searchTerm || item.title.toLowerCase().includes($searchTerm.toLowerCase());
+            const byCategory = $toggledCategories.size === 0 || $toggledCategories.has(item.category);
+            return bySearchTerm && byCategory;
+        });
+    }
+);
 
 
 </script>
-<!-- 
+
+
+
+
 <Section name="tableheader" sectionClass="bg-slate-50 dark:bg-transparent h-fit	 flex py-8 ">
     <TableHeader headerType="search">
         <Search slot="search" size="md" bind:value={searchTerm} />
@@ -221,7 +225,7 @@ async function addDocToFirestore(event: Event) {
         </TableHead>
 
         <TableBody>
-            {#each filteredItems as row, index}
+            {#each $filteredItems as row, index}
             <TableBodyRow>
                 <TableBodyCell><a href="{row.url_link}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{row.title}</a></TableBodyCell>
                 <TableBodyCell id="table-row-{index}" class="max-w-xs overflow-hidden">{row.description}</TableBodyCell>
@@ -246,7 +250,7 @@ async function addDocToFirestore(event: Event) {
 {/if}
 
 <Modal bind:open={formModal} size="md" autoclose={false} class="w-full">
-    <form class="flex flex-col space-y-6" on:submit={addDoc}>
+    <form on:submit|preventDefault={addDocSubmit}>
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Document Data</h3>
 
         <Label class="space-y-2">
@@ -341,4 +345,4 @@ async function addDocToFirestore(event: Event) {
         <Button color="red" on:click={removeDoc} class="mr-2">Yes, I'm sure</Button>
         <Button color="alternative">No, cancel</Button>
     </div>
-</Modal> -->
+</Modal>

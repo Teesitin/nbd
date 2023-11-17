@@ -5,6 +5,8 @@
     import { goto } from '$app/navigation';
     import { createUserWithEmailAndPassword } from 'firebase/auth';
     import { firebaseAuth } from '$lib/firebase';
+    import { getDatabase, ref, set } from "firebase/database";
+
 
     const dispatch = createEventDispatcher();
 
@@ -72,6 +74,8 @@
                 success = false;
             });
     };
+
+
 </script>
 
 <Section name="login">

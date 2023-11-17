@@ -11,10 +11,12 @@
 
   import { BottomNav, BottomNavItem, Tooltip } from 'flowbite-svelte';
   import { AdjustmentsVerticalOutline, UserCircleSolid, TableColumnSolid, FolderDuplicateSolid, StarHalfStrokeSolid } from 'flowbite-svelte-icons';
+  import AdavanceTable from "$lib/components/crud-blocks/DocDataCRUD/AdavanceTable.svelte";
+
 </script>
 
 {#if currentComponent === 'Table'}
-  <Table />
+  <AdavanceTable/>
 {:else if currentComponent === 'Category'}
   <PopulateCat /> 
 {:else if currentComponent === 'Reviews'}
