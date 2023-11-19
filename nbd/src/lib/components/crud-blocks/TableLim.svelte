@@ -5,6 +5,7 @@
     import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     import type { DocData } from '$lib/docData';
     import { writable } from 'svelte/store';
+    import EditDoc from './DocDataCRUD/EditDoc.svelte';
 
     const firestoreData = writable<DocData[]>([]);
     let filteredData: DocData[] = [];
@@ -49,7 +50,7 @@
                 <TableBodyCell>{row.tags}</TableBodyCell>
                 <TableBodyCell>{row.category}</TableBodyCell>
                 <TableBodyCell>
-                    <!-- Placeholder for action buttons like Edit/Delete -->
+                    <EditDoc docID={row.id}/>
                 </TableBodyCell>
             </TableBodyRow>
             {/each}
