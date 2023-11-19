@@ -2,7 +2,9 @@
     import { Card, Button } from 'flowbite-svelte';
     import { ArrowRightOutline } from 'flowbite-svelte-icons';
     import { Modal } from 'flowbite-svelte';
-    let clickOutsideModal = false;
+    let showTable = false;
+    let showShare = false;
+
 
     import TableLim from '../TableLim.svelte';
 
@@ -19,12 +21,17 @@
             {categoryDesc}
         </p>
     </div>
-    <Button on:click={() => (clickOutsideModal = true)}>
-        Show me the Docs
-    </Button>
+
+    <div class="flex gap-4">
+        <Button on:click={() => (showTable = true)} class="w-1/2">Show</Button>
+        <Button on:click={() => (showShare = true)} class="w-1/2" color="alternative">Share</Button>
+    </div>
+
+
+
 </Card>
 
 
-<Modal title="{categoryTitle}" bind:open={clickOutsideModal} autoclose outsideclose size = 'xl'>
-    <!-- <TableLim catagoryFilter = {categoryTitle}/> -->
+<Modal title="{categoryTitle}" bind:open={showTable} autoclose outsideclose size = 'xl'>
+    <TableLim catagoryFilter = {categoryTitle}/>
 </Modal>

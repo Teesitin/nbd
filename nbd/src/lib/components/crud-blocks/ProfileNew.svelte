@@ -132,10 +132,10 @@ function updateAchiementTags() {
 <Img src="/about/3-square.webp" alt="{profileData.username}" size="w-72" imgClass="h-72" class="rounded-full m-auto" />
 
 
-<Section name="crudcreateform" sectionClass="mt-0">
+<Section name="crudcreateform" sectionClass="mt-0 ">
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Profile</h2>
     <form on:submit={handleSubmit}>
-      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+      <div class="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-6">
         <div class="sm:col-span-2">
           <Label for="name" class="mb-2">Username</Label>
           <Input type="text" id="name"  required value={profileData.username}/>
@@ -160,7 +160,11 @@ function updateAchiementTags() {
           <Label for="description" class="mb-2">Description</Label>
           <Textarea id="description" placeholder="Your description here" rows="4" name="description" required />
         </div>
-        <Button type="submit" class="w-36">Update Profile</Button>
+
+        <div class="flex w-96">
+          <Button type="submit" class="w-1/2 mr-6">Update Profile</Button>
+          <Button type="button" class="w-1/2 mx-6" on:click={() => (popupModal = true)} color="alternative">Log Out</Button>
+        </div>
       </div>
     </form>
 </Section>
@@ -184,8 +188,6 @@ function updateAchiementTags() {
         
     </List>
 </Card>
-
-<Button on:click={() => (popupModal = true)}>Log Out</Button>
 
 <Modal bind:open={popupModal} size="xs" autoclose>
   <div class="text-center">
