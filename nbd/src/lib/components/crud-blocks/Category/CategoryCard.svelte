@@ -26,12 +26,9 @@
         <Button on:click={() => (showTable = true)} class="w-1/2">Show</Button>
         <Button on:click={() => (showShare = true)} class="w-1/2" color="alternative">Share</Button>
     </div>
-
-
-
 </Card>
 
 
 <Modal title="{categoryTitle}" bind:open={showTable} autoclose outsideclose size = 'xl'>
-    <TableLim catagoryFilter = {categoryTitle}/>
+    <TableLim categoryFilter = {categoryTitle}/>
 </Modal>
