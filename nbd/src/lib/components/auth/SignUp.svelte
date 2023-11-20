@@ -4,8 +4,10 @@
     import { createEventDispatcher } from 'svelte';
     import { goto } from '$app/navigation';
     import { createUserWithEmailAndPassword } from 'firebase/auth';
-    import { firebaseAuth } from '$lib/firebase';
+    import { db, firebaseAuth } from '$lib/firebase';
     import { getDatabase, ref, set } from "firebase/database";
+    import { addDoc, collection } from 'firebase/firestore';
+    import { authUser } from '$lib/authStore';
 
 
     const dispatch = createEventDispatcher();
@@ -55,10 +57,24 @@
 
 
     // Sign Up
-    const register = () => {
+    const register = async () => {
         createUserWithEmailAndPassword(firebaseAuth, email, password)
-            .then(() => {
+            .then(async () => {
                 toggleToLogin();
+
+
+                const collectionRef = collection(db, 'profileData');
+
+                const newProfile = {
+                    ach: '',
+                    desc: '',
+                    url: avatar_url,
+                    name: full_name,
+                    owner: $authUser.uid,
+                    username: username
+                };
+
+                const docRef = await addDoc(collectionRef, newProfile);
             })
             .catch((error) => {
                 errorCode = error.code;
