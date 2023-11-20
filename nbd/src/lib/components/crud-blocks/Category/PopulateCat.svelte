@@ -1,23 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { collection, query, getDocs } from 'firebase/firestore';
+  import { collection, query, getDocs, where } from 'firebase/firestore';
   import { db } from '$lib/firebase';
   import type { DocData } from '$lib/docData';
   import { writable } from 'svelte/store';
   import CategoryCard from "./CategoryCard.svelte";
+    import { authUser } from '$lib/authStore';
 
   const firestoreData = writable<DocData[]>([]);
 
   onMount(async () => {
-      const collectionRef = collection(db, 'docData');
-      const q = query(collectionRef);
-      const querySnapshot = await getDocs(q);
-      const docs: DocData[] = querySnapshot.docs.map(doc => ({
-          ...doc.data() as DocData,
-          id: doc.id
-      }));
-      firestoreData.set(docs);
-  });
+        authUser.subscribe(async ($authUser) => {
+            if ($authUser) {
+                const collectionRef = collection(db, 'docData');
+                const q = query(collectionRef, where("owner", "==", $authUser.uid));
+                const querySnapshot = await getDocs(q);
+                const docs = querySnapshot.docs.map(doc => ({
+                    ...doc.data() as DocData,
+                    id: doc.id
+                }));
+                firestoreData.set(docs);
+            }
+        });
+    });
 
   let categories: any[] = [];
 

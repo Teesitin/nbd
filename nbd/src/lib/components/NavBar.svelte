@@ -16,6 +16,7 @@
       <NavLi href="/about" class="text-scorpion-950">About</NavLi>
       <NavLi href="/donate" class="text-scorpion-950">Donate</NavLi>
       <NavLi href="/faq" class="text-scorpion-950">FAQ</NavLi>
+      
       {#if !$authUser}
         <NavLi href="/login" class="text-scorpion-950">Login</NavLi>
       {:else}

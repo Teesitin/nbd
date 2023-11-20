@@ -1,26 +1,34 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { collection, query, getDocs } from 'firebase/firestore';
+    import { collection, query, getDocs, where } from 'firebase/firestore';
     import { db } from '$lib/firebase';
     import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
     import type { DocData } from '$lib/docData';
     import { writable } from 'svelte/store';
     import EditDoc from './DocDataCRUD/EditDoc.svelte';
+    import { authUser } from '$lib/authStore';
 
     const firestoreData = writable<DocData[]>([]);
     let filteredData: DocData[] = [];
 
     onMount(async () => {
-        const collectionRef = collection(db, 'docData');
-        const q = query(collectionRef);
-        const querySnapshot = await getDocs(q);
-        const docs: DocData[] = querySnapshot.docs.map(doc => ({
-            ...doc.data() as DocData,
-            id: doc.id
-        }));
-        firestoreData.set(docs);
-        filteredData = docs; // Initialize filteredData with all documents
+        authUser.subscribe(async ($authUser) => {
+            if ($authUser) {
+                const collectionRef = collection(db, 'docData');
+                const q = query(collectionRef, where("owner", "==", $authUser.uid));
+                const querySnapshot = await getDocs(q);
+                const docs = querySnapshot.docs.map(doc => ({
+                    ...doc.data() as DocData,
+                    id: doc.id
+                }));
+                firestoreData.set(docs);
+                filteredData = docs;
+            }
+        });
     });
+
+
+
 
     // Optional: Category Filter
     export let categoryFilter = "";
