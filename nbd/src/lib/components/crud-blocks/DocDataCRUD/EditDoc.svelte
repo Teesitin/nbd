@@ -7,6 +7,7 @@
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
+    export let clickableTitle = 'Edit Doc';
 
     async function loadDoc() {
         console.log(docID);
@@ -129,7 +130,7 @@ function openEditModal() {
 
 </script>
 
-<a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">Edit Doc</a>
+<a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">{clickableTitle}</a>
 
 <Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
     <form on:submit={editDocSubmit}>
