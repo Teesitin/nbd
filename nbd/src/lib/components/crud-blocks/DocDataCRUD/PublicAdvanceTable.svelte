@@ -28,6 +28,13 @@
         }));
         firestoreData.set(docs);
         renderPagination(docs.length);
+
+        // const urlQuery = $page.query;
+        // const tagFromUrl = urlQuery.get('tag');
+
+        // searchTerm = tagFromUrl || '';
+
+        // console.log(searchTerm);
     });
 
 
