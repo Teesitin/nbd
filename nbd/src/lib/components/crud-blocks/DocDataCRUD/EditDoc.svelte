@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+    import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
     import { db, firebaseAuth } from '$lib/firebase';
     import { Button, Label, Modal ,Input, Textarea} from 'flowbite-svelte';
     import type { DocData } from '$lib/docData';
     import { authUser } from '$lib/authStore';
+    import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
+    export let clickableTitle = 'Edit Doc';
 
     async function loadDoc() {
         console.log(docID);
@@ -42,6 +44,8 @@
     let tags = '';
     let category = '';
 
+    let deleteModal = false;
+
     async function editDocSubmit() {
     if ($authUser && docID) {
         const docRef = doc(db, 'docData', docID);
@@ -54,7 +58,8 @@
             ratingComment,
             tags,
             category,
-            owner: $authUser.uid
+            owner: $authUser.uid,
+            id: ''
         };
 
         try {
@@ -71,6 +76,38 @@
         console.error('No user is logged in or docID is missing');
     }
 }
+
+
+
+async function deleteDocSubmit() {
+    if (docID) {
+        const docRef = doc(db, 'docData', docID);
+
+        try {
+            await deleteDoc(docRef);
+            console.log('Document successfully deleted!');
+
+            // Reset the docID and close the modal if necessary
+            docID = '';
+            defaultModal = false;
+
+            // Refresh or update your component state as needed
+            // e.g., refetching data if you're displaying a list of documents
+        } catch (e) {
+            console.error('Error deleting document:', e);
+        }
+    } else {
+        console.error('Document ID is missing');
+    }
+}
+
+
+
+
+
+
+
+
 
 function resetFormFields() {
     title = '';
@@ -93,13 +130,13 @@ function openEditModal() {
 
 </script>
 
-<a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">Edit Doc</a>
+<a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">{clickableTitle}</a>
 
 <Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
     <form on:submit={editDocSubmit}>
         <div class="grid gap-4 mb-4">
 
-        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Document</h3>
+        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Doc</h3>
 
         <Label class="space-y-2">
             <span>URL Link</span>
@@ -136,7 +173,20 @@ function openEditModal() {
             <Input bind:value={category} type="text" name="category" placeholder="Enter category" />
         </Label>
 
-        <Button type="submit" class="w-full mt-6">Add to My List</Button>
+        <div class="flex gap-4 mt-4">
+            <Button type="submit" class="w-1/2">Update</Button>
+            <Button type="button" class="w-1/2" on:click={() => (deleteModal = true)} color="alternative">Delete</Button>
+        </div>
+
         </div>
     </form>
+</Modal>
+
+<Modal bind:open={deleteModal} size="xs" autoclose backdropClass='fixed inset-0 z-50 bg-gray-900 bg-opacity-50 dark:bg-opacity-80'>
+    <div class="text-center">
+      <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
+      <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this doc? This is irreversible!</h3>
+        <Button color="red" class="mr-2" on:click={deleteDocSubmit}>Yes, I'm sure</Button>
+        <Button color="alternative">No, cancel</Button>
+    </div>
 </Modal>

@@ -1,65 +1,39 @@
-<script>
-    import { Section } from "flowbite-svelte-blocks";
-    import CategoryCard from "./CategoryCard.svelte";
-  
-    let categories = [
-      {
-        categoryTitle: "Front-end",
-        categoryDesc: "Everything you need to build out a modern web-app with a hint of spaghetti and cheese."
-      },
-      {
-        categoryTitle: "API",
-        categoryDesc: "Avocados, Popsicles, Iguana"
-      },
-      {
-        categoryTitle: "Back-end",
-        categoryDesc: "The core engine of your application, powering server-side tasks and database interactions."
-      },
-      {
-        categoryTitle: "DevOps",
-        categoryDesc: "Streamlining development processes through continuous integration and continuous delivery."
-      },
-      {
-        categoryTitle: "UX/UI Design",
-        categoryDesc: "Crafting engaging user experiences and intuitive interfaces."
-      },
-      {
-        categoryTitle: "Machine Learning",
-        categoryDesc: "Harnessing data and algorithms to predict patterns and make decisions."
-      },
-      {
-        categoryTitle: "Security",
-        categoryDesc: "Protecting systems and data from breaches and attacks."
-      },
-      {
-        categoryTitle: "Mobile Development",
-        categoryDesc: "Building apps for iOS and Android platforms."
-      },
-      {
-        categoryTitle: "Quality Assurance",
-        categoryDesc: "Ensuring software quality through systematic testing."
-      },
-      {
-        categoryTitle: "Project Management",
-        categoryDesc: "Overseeing projects from conception to completion."
-      },
-      {
-        categoryTitle: "Internet of Things",
-        categoryDesc: "Connecting and automating everyday objects for smarter living."
-      },
-      {
-        categoryTitle: "Cloud Computing",
-        categoryDesc: "Leveraging cloud infrastructure for scalable software solutions."
-      },
-      {
-        categoryTitle: "Blockchain",
-        categoryDesc: "Enabling secure, decentralized transactions and data storage."
-      }
-    ];
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { collection, query, getDocs, where } from 'firebase/firestore';
+  import { db } from '$lib/firebase';
+  import type { DocData } from '$lib/docData';
+  import { writable } from 'svelte/store';
+  import CategoryCard from "./CategoryCard.svelte";
+    import { authUser } from '$lib/authStore';
+
+  const firestoreData = writable<DocData[]>([]);
+
+  onMount(async () => {
+        authUser.subscribe(async ($authUser) => {
+            if ($authUser) {
+                const collectionRef = collection(db, 'docData');
+                const q = query(collectionRef, where("owner", "==", $authUser.uid));
+                const querySnapshot = await getDocs(q);
+                const docs = querySnapshot.docs.map(doc => ({
+                    ...doc.data() as DocData,
+                    id: doc.id
+                }));
+                firestoreData.set(docs);
+            }
+        });
+    });
+
+  let categories: any[] = [];
+
+  $: {
+      const allCategories = $firestoreData.map(doc => doc.category);
+      categories = [...new Set(allCategories)].map(categoryTitle => ({ categoryTitle, categoryDesc: '' }));
+  }
 </script>
 
-    <div class="grid gap-4 grid-cols-1 grid-rows-3 md:grid-cols-2 xl:grid-cols-3 m-auto max-w-6xl mb-[115px]">
-        {#each categories as category}
-            <CategoryCard categoryTitle={category.categoryTitle} categoryDesc={category.categoryDesc}/>
-        {/each}
-    </div>
+<div class="grid gap-4 grid-cols-1 grid-rows-3 md:grid-cols-2 xl:grid-cols-3 m-auto max-w-6xl mb-[115px]">
+    {#each categories as category}
+        <CategoryCard categoryTitle={category.categoryTitle} categoryDesc={category.categoryDesc}/>
+    {/each}
+</div>

@@ -2,10 +2,11 @@
     import { onMount } from 'svelte';
     import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Button, Dropdown, Checkbox, ButtonGroup } from 'flowbite-svelte';
     import { Section } from 'flowbite-svelte-blocks';
-    import paginationData from '../../utils/advancedTable.json'
     import { FilterSolid, ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
+    import { page } from "$app/stores";
+    import { get} from 'svelte/store';
 
-    import AddDoc from './AddDoc.svelte';
+
     import EditDoc from './EditDoc.svelte';
 
     import { collection, query, getDocs, where } from 'firebase/firestore';
@@ -13,25 +14,27 @@
     import type { DocData } from '$lib/docData';
     import { writable } from 'svelte/store';
 
-    import { authUser } from '$lib/authStore';
-
-// Initialize the store with the specific type
     const firestoreData = writable<DocData[]>([]);
+    let searchTerm = '';
+    let searchInput: { value: string; };
+
 
     onMount(async () => {
-        authUser.subscribe(async ($authUser) => {
-            if ($authUser) {
-                const collectionRef = collection(db, 'docData');
-                const q = query(collectionRef, where("owner", "==", $authUser.uid));
-                const querySnapshot = await getDocs(q);
-                const docs = querySnapshot.docs.map(doc => ({
-                    ...doc.data() as DocData,
-                    id: doc.id
-                }));
-                firestoreData.set(docs);
-                renderPagination(docs.length);
-            }
-        });
+        const collectionRef = collection(db, 'docData');
+        const querySnapshot = await getDocs(collectionRef);
+        const docs = querySnapshot.docs.map(doc => ({
+            ...doc.data() as DocData,
+            id: doc.id
+        }));
+        firestoreData.set(docs);
+        renderPagination(docs.length);
+
+        // const urlQuery = $page.query;
+        // const tagFromUrl = urlQuery.get('tag');
+
+        // searchTerm = tagFromUrl || '';
+
+        // console.log(searchTerm);
     });
 
 
@@ -43,7 +46,6 @@
     let svgDivClass='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none';
     let classInput="text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2  pl-10";
   
-    let searchTerm = '';
     let currentPosition = 0;
     const itemsPerPage = 10;
     const showPage = 5;
@@ -94,16 +96,18 @@
     $: endRange = Math.min(currentPosition + itemsPerPage, totalItems);
     
     $: currentPageItems = $firestoreData.slice(currentPosition, currentPosition + itemsPerPage);
-    $: filteredItems = $firestoreData.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
-
+    $: filteredItems = $firestoreData.filter(item => 
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.tags.toLowerCase().split(',').some(tag => 
+            tag.trim().includes(searchTerm.toLowerCase())
+        )
+    );
   </script>
   
 <Section name="tableheader" classSection='bg-transparent p-3 sm:p-5'>
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput}>
         <div slot="header" class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
 
-            <!-- Add New Document -->
-            <AddDoc/>
             <!-- Category Filter -->
             <Button color='alternative'>Filter<FilterSolid class="w-3 h-3 ml-2 " /></Button>
             <Dropdown class="w-48 p-3 space-y-2 text-sm">
@@ -130,8 +134,7 @@
             <TableHeadCell>Description</TableHeadCell>
             <TableHeadCell>Rating</TableHeadCell>
             <TableHeadCell>Tags</TableHeadCell>
-            <TableHeadCell>Category</TableHeadCell>
-            <TableHeadCell>Action</TableHeadCell>
+            <TableHeadCell>More</TableHeadCell>
         </TableHead>
 
         <TableBody>
@@ -142,8 +145,7 @@
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.rating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.category}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3"><EditDoc docID={item.id}/></TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3"><EditDoc clickableTitle='More' docID={item.id}/></TableBodyCell>
             </TableBodyRow>
             {/each}
             {:else}
@@ -153,8 +155,7 @@
                 <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.rating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.category}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3"><EditDoc docID={item.id}/></TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3"><EditDoc clickableTitle='More' docID={item.id}/></TableBodyCell>
             </TableBodyRow>
             {/each}
             {/if}

@@ -8,6 +8,27 @@
 		%sveltekit.head%
 	</head>
 
+	<style>
+		::-webkit-scrollbar {
+			width: 12px;
+		}
+	
+		::-webkit-scrollbar-track {
+			background: transparent;
+		}
+	
+		::-webkit-scrollbar-thumb {
+			background-color: #888;
+			border-radius: 6px;
+			border: none;
+		}
+	
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: #888;
+		}
+	</style>
+
 	<body data-sveltekit-preload-data="hover" class="bg-scorpion-0 dark:bg-scorpion-950">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>

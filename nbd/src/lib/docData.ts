@@ -7,4 +7,5 @@ export interface DocData {
     tags: string;
     title: string;
     url: string;
+    id:string;
 }

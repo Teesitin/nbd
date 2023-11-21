@@ -35,10 +35,12 @@
                 const docRef = await addDoc(collectionRef, newDoc);
                 console.log('Document successfully written with ID: ', docRef.id);
 
-                resetFormFields() 
+                resetFormFields();
 
                 // Close the modal
                 defaultModal = false;
+                window.location.reload();
+
             } catch (e) {
                 console.error('Error adding document: ', e);
             }
