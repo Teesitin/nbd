@@ -59,8 +59,13 @@ devDependencies:
     specifier: ^4.2.4
     version: 4.2.4
   svelte-check:
+<<<<<<< Updated upstream
     specifier: ^3.6.0
     version: 3.6.0(postcss@8.4.31)(sass@1.69.5)(svelte@4.2.4)
+=======
+    specifier: ^3.6.1
+    version: 3.6.1(postcss@8.4.31)(sass@1.69.5)(svelte@4.2.7)
+>>>>>>> Stashed changes
   tailwindcss:
     specifier: ^3.3.5
     version: 3.3.5
@@ -783,7 +788,11 @@ packages:
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.10
+<<<<<<< Updated upstream
       '@types/node': 20.9.1
+=======
+      '@types/node': 20.9.4
+>>>>>>> Stashed changes
     dev: false
 
   /@grpc/proto-loader@0.7.10:
@@ -921,7 +930,11 @@ packages:
       svelte: ^3.54.0 || ^4.0.0-next.0 || ^5.0.0-next.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< Updated upstream
       '@sveltejs/vite-plugin-svelte': 2.5.2(svelte@4.2.4)(vite@4.5.0)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.5.3(svelte@4.2.7)(vite@4.5.0)
+>>>>>>> Stashed changes
       '@types/cookie': 0.5.4
       cookie: 0.5.0
       devalue: 4.3.2
@@ -940,7 +953,11 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< Updated upstream
   /@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.2)(svelte@4.2.4)(vite@4.5.0):
+=======
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.3)(svelte@4.2.7)(vite@4.5.0):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-zjiuZ3yydBtwpF3bj0kQNV0YXe+iKE545QGZVTaylW3eAzFr+pJ/cwK8lZEaRp4JtaJXhD5DyWAV4AxLh6DgaQ==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -948,7 +965,11 @@ packages:
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< Updated upstream
       '@sveltejs/vite-plugin-svelte': 2.5.2(svelte@4.2.4)(vite@4.5.0)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.5.3(svelte@4.2.7)(vite@4.5.0)
+>>>>>>> Stashed changes
       debug: 4.3.4
       svelte: 4.2.4
       vite: 4.5.0(sass@1.69.5)
@@ -956,14 +977,23 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< Updated upstream
   /@sveltejs/vite-plugin-svelte@2.5.2(svelte@4.2.4)(vite@4.5.0):
     resolution: {integrity: sha512-Dfy0Rbl+IctOVfJvWGxrX/3m6vxPLH8o0x+8FA5QEyMUQMo4kGOVIojjryU7YomBAexOTAuYf1RT7809yDziaA==}
+=======
+  /@sveltejs/vite-plugin-svelte@2.5.3(svelte@4.2.7)(vite@4.5.0):
+    resolution: {integrity: sha512-erhNtXxE5/6xGZz/M9eXsmI7Pxa6MS7jyTy06zN3Ck++ldrppOnOlJwHHTsMC7DHDQdgUp4NAc4cDNQ9eGdB/w==}
+>>>>>>> Stashed changes
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< Updated upstream
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.2)(svelte@4.2.4)(vite@4.5.0)
+=======
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.3)(svelte@4.2.7)(vite@4.5.0)
+>>>>>>> Stashed changes
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
@@ -984,8 +1014,13 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
 
+<<<<<<< Updated upstream
   /@types/node@20.9.1:
     resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==}
+=======
+  /@types/node@20.9.4:
+    resolution: {integrity: sha512-wmyg8HUhcn6ACjsn8oKYjkN/zUzQeNtMy44weTJSM6p4MMzEOuKbA3OjJ267uPCOW7Xex9dyrNTful8XTQYoDA==}
+>>>>>>> Stashed changes
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -1056,7 +1091,11 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.22.1
+<<<<<<< Updated upstream
       caniuse-lite: 1.0.30001562
+=======
+      caniuse-lite: 1.0.30001564
+>>>>>>> Stashed changes
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1098,8 +1137,13 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
+<<<<<<< Updated upstream
       caniuse-lite: 1.0.30001562
       electron-to-chromium: 1.4.586
+=======
+      caniuse-lite: 1.0.30001564
+      electron-to-chromium: 1.4.593
+>>>>>>> Stashed changes
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: true
@@ -1118,8 +1162,13 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
+<<<<<<< Updated upstream
   /caniuse-lite@1.0.30001562:
     resolution: {integrity: sha512-kfte3Hym//51EdX4239i+Rmp20EsLIYGdPkERegTgU19hQWCRhsRFGKHTliUlsry53tv17K7n077Kqa0WJU4ng==}
+=======
+  /caniuse-lite@1.0.30001564:
+    resolution: {integrity: sha512-DqAOf+rhof+6GVx1y+xzbFPeOumfQnhYzVnZD6LAXijR77yPtm9mfOcqOnT3mpnJiZVT+kwLAFnRlZcIz+c6bg==}
+>>>>>>> Stashed changes
     dev: true
 
   /chokidar@3.5.3:
@@ -1234,8 +1283,13 @@ packages:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
     dev: true
 
+<<<<<<< Updated upstream
   /electron-to-chromium@1.4.586:
     resolution: {integrity: sha512-qMa+E6yf1fNQbg3G66pHLXeJUP5CCCzNat1VPczOZOqgI2w4u+8y9sQnswMdGs5m4C1rOePq37EVBr/nsPQY7w==}
+=======
+  /electron-to-chromium@1.4.593:
+    resolution: {integrity: sha512-c7+Hhj87zWmdpmjDONbvNKNo24tvmD4mjal1+qqTYTrlF0/sNpAcDlU0Ki84ftA/5yj3BF2QhSGEC0Rky6larg==}
+>>>>>>> Stashed changes
     dev: true
 
   /emoji-regex@8.0.0:
@@ -1903,7 +1957,11 @@ packages:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
+<<<<<<< Updated upstream
       '@types/node': 20.9.1
+=======
+      '@types/node': 20.9.4
+>>>>>>> Stashed changes
       long: 5.2.3
     dev: false
 
@@ -2073,8 +2131,13 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+<<<<<<< Updated upstream
   /svelte-check@3.6.0(postcss@8.4.31)(sass@1.69.5)(svelte@4.2.4):
     resolution: {integrity: sha512-8VfqhfuRJ1sKW+o8isH2kPi0RhjXH1nNsIbCFGyoUHG+ZxVxHYRKcb+S8eaL/1tyj3VGvWYx3Y5+oCUsJgnzcw==}
+=======
+  /svelte-check@3.6.1(postcss@8.4.31)(sass@1.69.5)(svelte@4.2.7):
+    resolution: {integrity: sha512-v+mmXKp+hZ+mZ/n9MQpAe+0q/GhRKXmhQOkWYAdRozXRkPiuLOdhsjp9KtNBpP0TRqvvrB0cwWL5HUjCLpI46g==}
+>>>>>>> Stashed changes
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
