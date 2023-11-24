@@ -13,9 +13,14 @@
 
   import { goto } from '$app/navigation';
   import { signOut } from 'firebase/auth';
-  import { firebaseAuth } from '$lib/firebase';
+  import { db, firebaseAuth } from '$lib/firebase';
   import { authUser } from '$lib/authStore';
- 
+
+  /*
+  import { collection, doc, setDoc } from 'firebase/firestore';
+  import type { ProfileData } from '$lib/profileData';
+ */
+
   const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {
@@ -125,7 +130,25 @@ function updateAchiementTags() {
         updateAchiementTags();
     }
 
-
+/*
+async function updateProfile() {
+  // Not sure how to check if user is owner of profile
+  if ($authUser) {
+    // Update db with data from form
+    await setDoc(doc(db, 'profileData', profileID), {
+      userName: profileData.firstName,
+      firstName: profileData.firstName,
+      lastName: profileData.firstName,
+      email: profileData.email,
+      // Achievement tag?
+      //ach: profileData.ach,
+      desc: profileData.desc
+    });
+  } else {
+      console.error('User is not logged in');
+  }
+}
+*/
 
 </script>
 
