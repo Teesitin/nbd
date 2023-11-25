@@ -7,7 +7,7 @@
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
-    export let clickableTitle = 'Edit Doc';
+    export let clickableTitle = 'View Doc';
 
     async function loadDoc() {
         console.log(docID);
@@ -36,13 +36,13 @@
     }
 
 
-    let title = '';
-    let desc = '';
-    let url = '';
-    let rating = 0;
-    let ratingComment = '';
-    let tags = '';
-    let category = '';
+    let title = 'Forbidden Software';
+    let desc = 'This is the basic description of a certain document that you can now read';
+    let url = 'https://chat.openai.com/';
+    let rating = 4;
+    let ratingComment = 'This is a test comment to display the basic functionality';
+    let tags = 'AI, LLM, Forbidden, ChatGPT, Software';
+    let category = 'Language Model';
 
     async function editDocSubmit() {
     if ($authUser && docID) {
@@ -72,13 +72,33 @@
     } else {
         console.error('No user is logged in or docID is missing');
     }
-}
+    }
+
+    // Function to generate stars based on the rating
+    function generateStars() {
+            const maxRating = 5;
+            const numberOfStars = Math.floor(rating);
+
+            // Create an array with the length of maxRating
+            return Array.from({ length: maxRating }, (_, index) => ({
+                filled: index < numberOfStars, // Determine if the star should be filled or empty
+            }));
+        }
+
+        // Call the function to get the array of stars
+        const stars = generateStars();
+
+        function getCondensedUrl(url: string) {
+            const urlObject = new URL(url);
+            const condensedPath = urlObject.pathname.length > 20 ? urlObject.pathname.substr(0, 20) + '...' : urlObject.pathname;
+            return `${urlObject.hostname}${condensedPath}`;
+        }
 
 
-function openEditModal() {
-    loadDoc();
-    defaultModal = true;
-}
+    function openEditModal() {
+        loadDoc();
+        defaultModal = true;
+    }
 
 
 
@@ -92,49 +112,54 @@ function openEditModal() {
     <form on:submit={editDocSubmit}>
         <div class="grid gap-4 mb-4">
 
-        <h3 class="mb-4 text-3xl font-medium font-bold text-primary-800">Forbidden Software</h3>
+            <h3 class="mb-4 text-3xl font-medium font-bold text-primary-800">{title}</h3>
 
         <div class="grid grid-cols-2">
             <Label class="space-y-2">
                 <span class="text-xl">URL Link</span>
                 <div>
-                    <a href="https://chat.openai.com/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">www.HeWhoShallNotBeNamed.com</a>
+                    {#if url}
+                        <a href={url} target="_blank" rel="noopener noreferrer" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            {getCondensedUrl(url)}
+                        </a>
+                    {:else}
+                        <p class="text-gray-500 dark:text-gray-400">No URL available</p>
+                    {/if}
                 </div>
             </Label>
     
             <Label class="space-y-2">
                 <span class="text-xl">Rating</span>
                 <div class="flex items-center">
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
+                    {#each stars as { filled }, i}
+                        {#if filled}
+                            <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                        {:else}
+                            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                        {/if}
+                    {/each}
+
+                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">{rating.toFixed(2)}</p>
                     <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
                     <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
-    
                 </div>
-    
             </Label>
+    
         </div>
 
 
 
         <Label class="space-y-2">
             <span>Description</span>
-            <p class="mb-3 text-gray-500 dark:text-gray-400">**REDACTED**, a revolutionary conversational AI platform from OpenAI, is built upon the formidable GPT-3.5 architecture, a preeminent model in natural language processing. With 175 billion parameters, GPT-3.5 boasts unparalleled language comprehension and generation capabilities. Its transformer architecture enables parallel processing, ensuring efficient handling of complex conversational scenarios. The platform's key features include natural language understanding, allowing it to grasp both explicit and implicit user inputs, and context retention, facilitating coherent and meaningful responses over extended dialogues. Noteworthy is **REDACTED**'s multifunctional capacity, making it applicable across diverse domains, from code generation and problem-solving for software developers to content creation and customer support. The platform offers the flexibility of fine-tuning for users with specific needs, enabling customization and optimization. In practical terms, developers can leverage **REDACTED** for code assistance, obtaining code snippets and algorithm explanations through natural language prompts. Content creators benefit from the model's creative writing assistance, brainstorming ideas and generating high-quality content. Businesses find value in integrating **REDACTED** into customer support systems, enhancing responsiveness and user experience. As a software developer, embracing **REDACTED** in projects opens avenues for improved user interactions, heightened productivity, and innovation across various applications, be it chatbots, content generation tools, or interactive systems. In essence, **REDACTED** is a powerful ally at the forefront of conversational AI, offering unparalleled capabilities that elevate software development to new heights.</p>
-
+            {#if desc && desc.length > 0}
+                <p class="mb-3 text-gray-500 dark:text-gray-400">{desc}</p>
+            {:else}
+                <p>No description available.</p>
+            {/if}
         </Label>
 
     
@@ -142,51 +167,32 @@ function openEditModal() {
         <Label class="space-y-2">
             <span>Rating Comment</span>
             <div class="bg-opacity-50 dark:bg-opacity-80 max-w-xl mx-auto">
-
-                <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 mb-4 shadow-md">
-                  <div class="flex items-center">
-                    <div>
-                      <span class="text-gray-500 dark:text-white text-sm">Posted on 2023-11-25</span>
+                {#if ratingComment && ratingComment.length > 0}
+                    <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 mb-4 shadow-md">
+                        <p class="text-gray-500 dark:text-white">{ratingComment}</p>
                     </div>
-                  </div>
-                  <p class="text-gray-500 dark:text-white mt-2">
-                    This is the first comment. It can be as long or as short as needed. You can customize the styling based on your design preferences.
-                  </p>
-                </div>
-            
-                <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 mb-4 shadow-md">
-                  <div class="flex items-center">
-                    <div>
-                      <span class="text-gray-500 dark:text-white text-sm">Posted on 2023-11-24</span>
-                    </div>
-                  </div>
-                  <p class="text-gray-500 dark:text-white mt-2">
-                    Another user added a comment. Tailwind CSS classes are used for styling, providing a clean and responsive design.
-                  </p>
-                </div>
-            
-              </div>
+                {:else}
+                    <p>No comments available.</p>
+                {/if}
+            </div>
         </Label>
 
         <Label class="space-y-2">
             <span>Tags</span>
             <div class="flex flex-wrap gap-2">
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Technology</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Programming</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Web Development</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Design</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Artificial Intelligence</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Data Science</span>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Startups</span>
-              </div>
-              
+                {#each tags.split(',') as tag (tag)}
+                    <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">{tag}</span>
+                {/each}
+            </div>
               
         </Label>
 
         <Label class="space-y-2">
             <span class="text-l">Category</span>
-            <div>
-                <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">Artifical Intelligence</span>
+            <div class="flex flex-wrap gap-2">
+                {#if category}
+                    <span class="flex-grow-0 flex-shrink-0 px-3 py-1 mb-2 bg-primary-800 text-white rounded-md h-8">{category}</span>
+                {/if}
             </div>
         </Label>
 
