@@ -5,6 +5,7 @@
     import type { DocData } from '$lib/docData';
     import { authUser } from '$lib/authStore';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+    import { goto } from '$app/navigation';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
     export let clickableTitle = 'Edit Doc';
@@ -66,9 +67,10 @@
             await setDoc(docRef, updatedDoc);
             console.log('Document successfully updated!');
 
-            // Close the modal and reset form fields
             defaultModal = false;
             resetFormFields();
+            window.location.reload();
+
         } catch (e) {
             console.error('Error updating document: ', e);
         }
@@ -87,12 +89,11 @@ async function deleteDocSubmit() {
             await deleteDoc(docRef);
             console.log('Document successfully deleted!');
 
-            // Reset the docID and close the modal if necessary
             docID = '';
             defaultModal = false;
 
-            // Refresh or update your component state as needed
-            // e.g., refetching data if you're displaying a list of documents
+            window.location.reload();
+
         } catch (e) {
             console.error('Error deleting document:', e);
         }
@@ -136,42 +137,32 @@ function openEditModal() {
     <form on:submit={editDocSubmit}>
         <div class="grid gap-4 mb-4">
 
-        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Doc</h3>
+        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Docs</h3>
 
-        <Label class="space-y-2">
-            <span>URL Link</span>
+        <Label class="space-y-2">URL Link</Label>
             <Input bind:value={url} type="url" name="urlLink" placeholder="Enter URL link" />
-        </Label>
 
-        <Label class="space-y-2">
+        <Label class="space-y-2"></Label>
             <span>Title</span>
             <Input bind:value={title} type="text" name="title" placeholder="Enter title" required />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Description</span>
-            <Textarea bind:value={desc} name="description" placeholder="Enter description" required></Textarea>
-        </Label>
+        <Label class="space-y-2">Description</Label>
+        <Textarea bind:value={desc} name="description" placeholder="Enter description" required></Textarea>
 
-        <Label class="space-y-2">
-            <span>Rating</span>
+        <Label class="space-y-2">Rating</Label>
             <Input bind:value={rating} type="number" name="rating" placeholder="Enter rating (1-10)" min="1" max="10" />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Rating Comment</span>
+        <Label class="space-y-2">Rating Comment</Label>
             <Textarea bind:value={ratingComment} name="rating_comment" placeholder="Enter rating comment"></Textarea>
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Tags</span>
+
+        <Label class="space-y-2">Tags</Label>
             <Input bind:value={tags} type="text" name="tags" placeholder="Enter tags (comma separated)" />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Category</span>
+
+        <Label class="space-y-2">Category</Label>
             <Input bind:value={category} type="text" name="category" placeholder="Enter category" />
-        </Label>
+
 
         <div class="flex gap-4 mt-4">
             <Button type="submit" class="w-1/2">Update</Button>

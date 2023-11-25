@@ -24,7 +24,7 @@
 
         const allTags = querySnapshot.docs.flatMap(doc => {
             const data = doc.data() as DocData;
-            return data.tags.split(',').map(tag => tag.trim());
+            return data.tags.split(',').map(tag => tag.trim().toLowerCase());
         });
 
         const uniqueTags = Array.from(new Set(allTags));

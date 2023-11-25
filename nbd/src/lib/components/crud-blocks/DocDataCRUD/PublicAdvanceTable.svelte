@@ -2,12 +2,9 @@
     import { onMount } from 'svelte';
     import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Button, Dropdown, Checkbox, ButtonGroup } from 'flowbite-svelte';
     import { Section } from 'flowbite-svelte-blocks';
-    import { FilterSolid, ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
-    import { page } from "$app/stores";
-    import { get} from 'svelte/store';
+    import { ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
 
-
-    import EditDoc from './EditDoc.svelte';
+    let urlTableClass = "max-w-xs overflow-x-hidden hover:overflow-x-auto scrollbar";
 
     import { collection, query, getDocs, where } from 'firebase/firestore';
     import { db } from '$lib/firebase';
@@ -16,25 +13,39 @@
 
     const firestoreData = writable<DocData[]>([]);
     let searchTerm = '';
-    let searchInput: { value: string; };
+    
+    interface ProcessedDocData {
+        url: string;
+        averageRating: string;
+        tags: string;
+    }
 
+    const processedData = writable<ProcessedDocData[]>([]);
 
     onMount(async () => {
         const collectionRef = collection(db, 'docData');
         const querySnapshot = await getDocs(collectionRef);
-        const docs = querySnapshot.docs.map(doc => ({
-            ...doc.data() as DocData,
-            id: doc.id
+        const docs = querySnapshot.docs.map(doc => doc.data() as DocData);
+
+        const urlMap = new Map();
+        docs.forEach(doc => {
+            if (!urlMap.has(doc.url)) {
+                urlMap.set(doc.url, { totalRating: 0, count: 0, tags: new Set() });
+            }
+            const entry = urlMap.get(doc.url);
+            entry.totalRating += doc.rating;
+            entry.count++;
+            doc.tags.split(',').forEach(tag => entry.tags.add(tag.trim()));
+        });
+
+        const uniqueData = Array.from(urlMap, ([url, { totalRating, count, tags }]) => ({
+            url,
+            averageRating: (totalRating / count).toFixed(2),
+            tags: Array.from(tags).join(', ')
         }));
-        firestoreData.set(docs);
-        renderPagination(docs.length);
 
-        // const urlQuery = $page.query;
-        // const tagFromUrl = urlQuery.get('tag');
-
-        // searchTerm = tagFromUrl || '';
-
-        // console.log(searchTerm);
+        processedData.set(uniqueData);
+        console.log(uniqueData);
     });
 
 
@@ -52,7 +63,7 @@
     let totalPages = 0;
     let pagesToShow:any = [];
     let totalItems = 0;
-    $: totalItems = $firestoreData.length;
+    $: totalItems = $processedData.length;
     let startPage:any;
     let endPage:any;
   
@@ -95,67 +106,55 @@
     $: startRange = currentPosition + 1;
     $: endRange = Math.min(currentPosition + itemsPerPage, totalItems);
     
-    $: currentPageItems = $firestoreData.slice(currentPosition, currentPosition + itemsPerPage);
-    $: filteredItems = $firestoreData.filter(item => 
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.tags.toLowerCase().split(',').some(tag => 
-            tag.trim().includes(searchTerm.toLowerCase())
-        )
+    $: currentPageItems = $processedData.slice(currentPosition, currentPosition + itemsPerPage);
+    
+
+    $: filteredData = $processedData.filter(item =>
+        item.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.tags.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
   </script>
   
+<svelte:head>
+    <style>
+        .scrollbar::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+    </style>
+</svelte:head>
+
 <Section name="tableheader" classSection='bg-transparent p-3 sm:p-5'>
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput}>
-        <div slot="header" class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-
-            <!-- Category Filter -->
-            <Button color='alternative'>Filter<FilterSolid class="w-3 h-3 ml-2 " /></Button>
-            <Dropdown class="w-48 p-3 space-y-2 text-sm">
-                <li>
-                    <Checkbox>Cat 1</Checkbox>
-                </li>
-                <li>
-                    <Checkbox>Cat 2</Checkbox>
-                </li>
-                <li>
-                    <Checkbox>Cat 3</Checkbox>
-                </li>
-                <li>
-                    <Checkbox>Cat 4</Checkbox>
-                </li>
-                <li>
-                    <Checkbox>Cat 5</Checkbox>
-                </li>
-            </Dropdown>
-        </div>
-
         <TableHead>
-            <TableHeadCell>Title and Url</TableHeadCell>
-            <TableHeadCell>Description</TableHeadCell>
+            <TableHeadCell>Url</TableHeadCell>
             <TableHeadCell>Rating</TableHeadCell>
             <TableHeadCell>Tags</TableHeadCell>
-            <TableHeadCell>More</TableHeadCell>
         </TableHead>
 
         <TableBody>
             {#if searchTerm !== ''}
-            {#each filteredItems as item (item.id)}
+            {#each filteredData as item}
             <TableBodyRow>
-                <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.rating}</TableBodyCell>
+                <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3"><EditDoc clickableTitle='More' docID={item.id}/></TableBodyCell>
             </TableBodyRow>
             {/each}
             {:else}
-            {#each currentPageItems as item (item.id)}
+            {#each currentPageItems as item}
             <TableBodyRow>
-                <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.rating}</TableBodyCell>
+                <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3"><EditDoc clickableTitle='More' docID={item.id}/></TableBodyCell>
             </TableBodyRow>
             {/each}
             {/if}
