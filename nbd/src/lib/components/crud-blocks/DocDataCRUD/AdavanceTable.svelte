@@ -139,7 +139,7 @@
             {#each filteredItems as item (item.id)}
             <TableBodyRow>
                 <TableBodyCell><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.title}</a></TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.desc}</TableBodyCell>
+                <TableBodyCell class="max-h-12" tdClass="px-4 py-3">{item.desc}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.rating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.category}</TableBodyCell>

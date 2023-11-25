@@ -5,6 +5,7 @@
     import type { DocData } from '$lib/docData';
     import { authUser } from '$lib/authStore';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+    import { goto } from '$app/navigation';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
     export let clickableTitle = 'Edit Doc';
@@ -66,9 +67,10 @@
             await setDoc(docRef, updatedDoc);
             console.log('Document successfully updated!');
 
-            // Close the modal and reset form fields
             defaultModal = false;
             resetFormFields();
+            window.location.reload();
+
         } catch (e) {
             console.error('Error updating document: ', e);
         }
@@ -87,12 +89,11 @@ async function deleteDocSubmit() {
             await deleteDoc(docRef);
             console.log('Document successfully deleted!');
 
-            // Reset the docID and close the modal if necessary
             docID = '';
             defaultModal = false;
 
-            // Refresh or update your component state as needed
-            // e.g., refetching data if you're displaying a list of documents
+            window.location.reload();
+
         } catch (e) {
             console.error('Error deleting document:', e);
         }
