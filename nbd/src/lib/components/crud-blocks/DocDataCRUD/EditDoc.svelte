@@ -138,40 +138,30 @@ function openEditModal() {
 
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Docs</h3>
 
-        <Label class="space-y-2">
-            <span>URL Link</span>
+        <Label class="space-y-2">URL Link</Label>
             <Input bind:value={url} type="url" name="urlLink" placeholder="Enter URL link" />
-        </Label>
 
-        <Label class="space-y-2">
+        <Label class="space-y-2"></Label>
             <span>Title</span>
             <Input bind:value={title} type="text" name="title" placeholder="Enter title" required />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Description</span>
-            <Textarea bind:value={desc} name="description" placeholder="Enter description" required></Textarea>
-        </Label>
+        <Label class="space-y-2">Description</Label>
+        <Textarea bind:value={desc} name="description" placeholder="Enter description" required></Textarea>
 
-        <Label class="space-y-2">
-            <span>Rating</span>
+        <Label class="space-y-2">Rating</Label>
             <Input bind:value={rating} type="number" name="rating" placeholder="Enter rating (1-10)" min="1" max="10" />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Rating Comment</span>
+        <Label class="space-y-2">Rating Comment</Label>
             <Textarea bind:value={ratingComment} name="rating_comment" placeholder="Enter rating comment"></Textarea>
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Tags</span>
+
+        <Label class="space-y-2">Tags</Label>
             <Input bind:value={tags} type="text" name="tags" placeholder="Enter tags (comma separated)" />
-        </Label>
 
-        <Label class="space-y-2">
-            <span>Category</span>
+
+        <Label class="space-y-2">Category</Label>
             <Input bind:value={category} type="text" name="category" placeholder="Enter category" />
-        </Label>
+
 
         <div class="flex gap-4 mt-4">
             <Button type="submit" class="w-1/2">Update</Button>
