@@ -1,16 +1,13 @@
 <script lang="ts">
   import PopulateCat from '$lib/components/crud-blocks/Category/PopulateCat.svelte';
-  import Table from '$lib/components/crud-blocks/Table.svelte';
   import Reviews from '$lib/components/crud-blocks/Reviews.svelte';
   import Settings from '$lib/components/crud-blocks/Settings.svelte';
   import ProfileNew from '$lib/components/crud-blocks/ProfileNew.svelte';
-  import { fade } from 'svelte/transition';
-  import { onMount } from 'svelte';
 
   let currentComponent: string = 'Table';
 
   import { BottomNav, BottomNavItem, Tooltip } from 'flowbite-svelte';
-  import { AdjustmentsVerticalOutline, UserCircleSolid, TableColumnSolid, FolderDuplicateSolid, StarHalfStrokeSolid } from 'flowbite-svelte-icons';
+  import { UserCircleSolid, TableColumnSolid, FolderDuplicateSolid } from 'flowbite-svelte-icons';
   import AdavanceTable from "$lib/components/crud-blocks/DocDataCRUD/AdavanceTable.svelte";
 
 </script>
