@@ -17,12 +17,12 @@
         },
         {
             href: '/',
-            src: '/about/3-square.webp',
+            src: '/about/charity.webp',
             github: "https://github.com/CCRollins",
             alt: 'Charity Rollins',
             name: 'Charity Rollins',
             jobTitle: 'Lost & Confused',
-            description: "She's DeLayne's twin until she figures out how this thing works. So far, she's only got her Github linked. This is only temporary."
+            description: "She's trying to figure out how this thing works. So far, she's only got her Github linked. This is only temporary."
         }
     ];
 

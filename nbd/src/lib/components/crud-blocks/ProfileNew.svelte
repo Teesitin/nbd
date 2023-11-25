@@ -16,10 +16,9 @@
   import { db, firebaseAuth } from '$lib/firebase';
   import { authUser } from '$lib/authStore';
 
-  /*
-  import { collection, doc, setDoc } from 'firebase/firestore';
-  import type { ProfileData } from '$lib/profileData';
- */
+  //import { collection, doc, setDoc } from 'firebase/firestore';
+  //import type { ProfileData } from '$lib/profileData';
+
 
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -130,11 +129,12 @@ function updateAchiementTags() {
         updateAchiementTags();
     }
 
-/*
+
+/* 
 async function updateProfile() {
   // Not sure how to check if user is owner of profile
   if ($authUser) {
-    // Update db with data from form
+    // Update db with data from form?
     await setDoc(doc(db, 'profileData', profileID), {
       userName: profileData.firstName,
       firstName: profileData.firstName,
