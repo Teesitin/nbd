@@ -1,20 +1,36 @@
 <script lang="ts">
-    import { Card, Button } from 'flowbite-svelte';
-    import { List, Li } from 'flowbite-svelte';
-    import { Progressbar } from 'flowbite-svelte';
+  import { Card, Button } from 'flowbite-svelte';
+  import { List, Li } from 'flowbite-svelte';
+  import { Progressbar } from 'flowbite-svelte';
 
-    import { Section } from 'flowbite-svelte-blocks';
-    import { Label, Input, Select, Textarea } from 'flowbite-svelte';
-    import { Img } from 'flowbite-svelte';
+  import { Section } from 'flowbite-svelte-blocks';
+  import { Label, Input, Select, Textarea } from 'flowbite-svelte';
+  import { Img } from 'flowbite-svelte';
 
-    import { Modal } from 'flowbite-svelte';
-    import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
-    let popupModal = false;    
+  import { Modal } from 'flowbite-svelte';
+  import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
+  let popupModal = false;    
 
   import { goto } from '$app/navigation';
   import { signOut } from 'firebase/auth';
-  import { firebaseAuth } from '$lib/firebase';
+  import { db, firebaseAuth } from '$lib/firebase';
   import { authUser } from '$lib/authStore';
+  import { onMount } from 'svelte';
+  import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+  import type { ProfileData } from '$lib/profileData';
+  import { Toast } from 'flowbite-svelte';
+  import { slide } from 'svelte/transition';
+  import { quintOut, elasticOut } from 'svelte/easing';
+  import { CheckCircleSolid } from 'flowbite-svelte-icons';
+
+  let ach = '';
+  let desc = '';
+  let name = '';
+  let owner = '';
+  let url = '';
+  let username = '';
+
+  let showToast = false;
  
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -27,31 +43,47 @@
       });
   };
 
-    const handleSubmit = () => {
-        alert('Form submited.');
-    };
+  const handleSubmit = async () => {
+    if ($authUser) {
+      const updateProfile: ProfileData = {
+        ach,
+        desc,
+        name,
+        url,
+        owner,
+        username
+      };
 
-    let selected: any;
-
-    let achiementTags = [
-        { value: 'tv', name: 'TV/Monitors' },
-        { value: 'pc', name: 'PC' },
-        { value: 'phone', name: 'Phones' }
-    ];
-
-
-
-    let profileData = {
-        username:'Teesitin',
-        firstName: 'DeLayne',
-        lastName: 'Russell',
-        id:'123',
-        email:'example@gmail.com',
-        desc:'A Web Developer that has no clue with what he is doing...',
-        tagline:'Doc Doc Who'
+      try {
+        setDoc(doc(db, 'profileData', $authUser.uid), updateProfile);
+        showToast = true;
+      } catch (e) {
+        console.error('Error updating profile: ', e);
+      }
     }
+  };
 
-    let achievements = [
+  let selected: any;
+
+  let achiementTags = [
+      { value: 'tv', name: 'TV/Monitors' },
+      { value: 'pc', name: 'PC' },
+      { value: 'phone', name: 'Phones' }
+  ];
+
+
+
+  let profileData = {
+      username:'Teesitin',
+      firstName: 'DeLayne',
+      lastName: 'Russell',
+      id:'123',
+      email:'example@gmail.com',
+      desc:'A Web Developer that has no clue with what he is doing...',
+      tagline:'Doc Doc Who'
+  }
+
+  let achievements = [
     {
         name: 'Doc Novice',
         progress: 100,
@@ -112,54 +144,60 @@
         desc: 'Add 1000 docs to your list',
         id: 'doc_count_1000'
     }
-];
+  ];
 
 
-function updateAchiementTags() {
-        achiementTags = achievements.filter(a => a.progress === 100).map(a => ({ value: a.id, name: a.name }));
-}
+  function updateAchiementTags() {
+    achiementTags = achievements.filter(a => a.progress === 100).map(a => ({ value: a.id, name: a.name }));
+  }
 
-    updateAchiementTags();
+  updateAchiementTags();
 
-    $: if (achievements) {
-        updateAchiementTags();
-    }
+  $: if (achievements) {
+      updateAchiementTags();
+  }
 
-
+  onMount(async () => {
+      const collectionRef = doc(db, 'profileData', $authUser.uid);
+      const querySnapshot = await getDoc(collectionRef);
+      const data = querySnapshot.data();
+      name = data.name;
+      username = data.username;
+      desc = data.desc;
+      url = data.url;
+  });
 
 </script>
 
-<Img src="/about/3-square.webp" alt="{profileData.username}" size="w-72" imgClass="h-72" class="rounded-full m-auto" />
+<Img src={url} alt="{username}" size="w-72" imgClass="h-72" class="rounded-full m-auto" />
 
 
 <Section name="crudcreateform" sectionClass="mt-0 mb-10">
-    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Profile</h2>
+    <h2 class="mb-0 text-xl font-bold text-gray-900 dark:text-white">Edit Profile</h2>
+    <h2 class="mb-6 text-md font-bold text-gray-900 dark:text-white">{$authUser.email}</h2>
     <form on:submit={handleSubmit}>
       <div class="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-6">
         <div class="sm:col-span-2">
           <Label for="name" class="mb-2">Username</Label>
-          <Input type="text" id="name"  required value={profileData.username}/>
+          <Input type="text" id="name"  required bind:value={username}/>
         </div>
         <div class="w-full">
-          <Label for="brand" class="mb-2">First Name</Label>
-          <Input type="text" id="brand" required value={profileData.firstName}/>
+          <Label for="brand" class="mb-2">Full Name</Label>
+          <Input type="text" id="brand" bind:value={name}/>
         </div>
-        <div class="w-full">
-          <Label for="price" class="mb-2">Last Name</Label>
-          <Input type="text" id="price" required value={profileData.lastName}/>
-        </div>
-        <div class="w-full">
-            <Label for="email" class="mb-2">Email</Label>
-            <Input type="text" id="price" required value={profileData.email}/>
-        </div>
-        <div class="w-full">
+        <!-- <div class="w-full">
           <Label for="weight" class="mb-2">Achiement Tag</Label>
           <Select class="mt-2" items={achiementTags} bind:value={selected} required/>
+        </div> -->
+        <div class="w-full">
+          <Label for="brand" class="mb-2">Image URL</Label>
+          <Input type="text" id="brand" bind:value={url}/>
         </div>
         <div class="sm:col-span-2">
           <Label for="description" class="mb-2">Description</Label>
-          <Textarea id="description" placeholder="Your description here" rows="4" name="description" required />
+          <Textarea id="description" placeholder="Your description here" rows="4" name="description" bind:value={desc}/>
         </div>
+        
 
         <div class="flex w-96">
           <Button type="submit" class="w-1/2 mr-6">Update Profile</Button>
@@ -197,3 +235,9 @@ function updateAchiementTags() {
     <Button color="alternative">Nope</Button>
   </div>
 </Modal>
+
+{#if showToast}
+  <Toast class='z-50 w-42' contentClass="w-full text-md font-normal flex items-center justify-between" position="bottom-right">
+    Profile updated!
+  </Toast>
+{/if}
