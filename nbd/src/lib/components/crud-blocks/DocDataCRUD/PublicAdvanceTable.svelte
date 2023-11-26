@@ -4,6 +4,7 @@
     import { Section } from 'flowbite-svelte-blocks';
     import { ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
     import { page } from '$app/stores';
+    import ViewDoc from './ViewDoc.svelte';
 
 
     let urlTableClass = "max-w-xs overflow-x-hidden hover:overflow-x-auto scrollbar";
@@ -148,6 +149,7 @@
             <TableHeadCell>Url</TableHeadCell>
             <TableHeadCell>Rating</TableHeadCell>
             <TableHeadCell>Tags</TableHeadCell>
+            <TableHeadCell>More</TableHeadCell>
         </TableHead>
 
         <TableBody>
@@ -157,6 +159,9 @@
                 <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3">
+                    <ViewDoc url={item.url} rating={item.averageRating} tags={item.tags}/>
+                </TableBodyCell>
             </TableBodyRow>
             {/each}
             {:else}
@@ -165,6 +170,9 @@
                 <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3">
+                    <ViewDoc url={item.url} rating={item.averageRating} tags={item.tags}/>
+                </TableBodyCell>
             </TableBodyRow>
             {/each}
             {/if}

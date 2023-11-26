@@ -10,70 +10,17 @@
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
     export let clickableTitle = 'View Doc';
 
-    async function loadDoc() {
-        console.log(docID);
-
-
-        if (!docID) return;
-
-        const docRef = doc(db, 'docData', docID);
-        try {
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data() as DocData;
-                title = data.title;
-                desc = data.desc;
-                url = data.url;
-                rating = data.rating;
-                ratingComment = data.ratingComment;
-                tags = data.tags;
-                category = data.category;
-            } else {
-                console.log('No such document!');
-            }
-        } catch (error) {
-            console.error('Error loading document:', error);
-        }
-    }
 
 
     let title = '';
-    let desc = 'This is the basic description of a certain document that you can now read';
-    let url = '';
-    let rating = 3;
-    let ratingComment = 'This is a test comment to display the basic functionality';
-    let tags = 'AI, LLM, Forbidden, ChatGPT, Software';
-    let category = 'Language Model';
+    let desc = '';
+    export let url = '';
+    export let rating = '';
+    let ratingComment = '';
+    export let tags = '';
+    let category = '';
 
-    async function editDocSubmit() {
-    if ($authUser && docID) {
-        const docRef = doc(db, 'docData', docID);
-        
-        const updatedDoc: DocData = {
-            title,
-            desc,
-            url,
-            rating,
-            ratingComment,
-            tags,
-            category,
-            owner: $authUser.uid,
-            id: ''
-        };
-
-        try {
-            await setDoc(docRef, updatedDoc);
-            console.log('Document successfully updated!');
-
-            // Close the modal and reset form fields test
-            defaultModal = false;
-        } catch (e) {
-            console.error('Error updating document: ', e);
-        }
-    } else {
-        console.error('No user is logged in or docID is missing');
-    }
-    }
+    
 
     // Function to generate stars based on the rating
 
@@ -98,7 +45,6 @@
 
 
     function openEditModal() {
-        loadDoc();
         defaultModal = true;
     }
 
@@ -111,7 +57,6 @@
 <a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">{clickableTitle}</a>
 
 <Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
-    <form on:submit={editDocSubmit}>
         <div class="grid gap-4 mb-4">
 
             <h3 class="mb-4 text-3xl font-medium font-bold text-primary-800">
@@ -126,11 +71,14 @@
                 </div>
             </h3>
 
-        <div class="grid grid-cols-1">
+        <div class="flex justify-between">
             
             <Label class="space-y-2">
                 <span class="text-xl">Rating</span>
-                <Rating id="example-1" total={5} size={24} rating={1.4} />
+                <div class="flex">
+                    <Rating id="example-1" total={5} size={24} rating={Number(rating)/2} /> 
+                    <span class="ml-5 mt-0.5">Users rated this {Number(rating)/2} out of 5</span>
+                </div>
                 <!-- <div class="flex items-center">
                     {#each stars as { filled }, i}
                         {#if filled}
@@ -154,19 +102,19 @@
 
 
 
-        <Label class="space-y-2">
+        <!-- <Label class="space-y-2">
             <span>Description</span>
             {#if desc && desc.length > 0}
                 <p class="mb-3 text-gray-500 dark:text-gray-400">{desc}</p>
             {:else}
                 <p>No description available.</p>
             {/if}
-        </Label>
+        </Label> -->
 
     
 
         <Label class="space-y-2">
-            <span>Rating Comment</span>
+            <span>Comments</span>
             <div class="max-w-xl mb-4">
                 {#if ratingComment && ratingComment.length > 0}
                     <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 shadow-md">
@@ -190,5 +138,4 @@
 
 
         </div>
-    </form>
 </Modal>
