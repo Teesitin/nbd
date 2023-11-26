@@ -105,7 +105,7 @@
             <!-- Add New Document -->
             <AddDoc/>
             <!-- Category Filter -->
-            <Button color='alternative'>Filter<FilterSolid class="w-3 h-3 ml-2 " /></Button>
+            <!-- <Button color='alternative'>Filter<FilterSolid class="w-3 h-3 ml-2 " /></Button>
             <Dropdown class="w-48 p-3 space-y-2 text-sm">
                 <li>
                     <Checkbox>Cat 1</Checkbox>
@@ -122,7 +122,7 @@
                 <li>
                     <Checkbox>Cat 5</Checkbox>
                 </li>
-            </Dropdown>
+            </Dropdown> -->
         </div>
 
         <TableHead>

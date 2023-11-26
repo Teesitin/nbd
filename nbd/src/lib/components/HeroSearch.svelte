@@ -72,6 +72,12 @@ function handleDropdownClick(tag:string) {
     goto(`/software?tag=${encodeURIComponent(tag)}`);
 }
 
+function handleEnterPress(event: { key: string; }) {
+    if (event.key === 'Enter') {
+        loadSoftware();
+    }
+}
+
 </script>
 
 
@@ -88,7 +94,7 @@ function handleDropdownClick(tag:string) {
     
     <!-- Doc Search -->
     <div class="search-container m-4 flex justify-center items-center border-violet-950 border-solid gap-4 flex-col  w-72 sm:flex-row sm:w-96">
-        <input type="text" bind:value={$searchInput} class="search-bar w-full sm:w-5/6 font-roboto boder-scorpion-950 border-2 rounded-full" placeholder="Search for Software...">
+        <input type="text" bind:value={$searchInput} on:keydown={handleEnterPress} class="search-bar w-full sm:w-5/6 font-roboto boder-scorpion-950 border-2 rounded-full" placeholder="Search for Software...">
 
         {#if showDropdown}
             <Dropdown class="w-72 max-h-72 overflow-auto" open={true}>
