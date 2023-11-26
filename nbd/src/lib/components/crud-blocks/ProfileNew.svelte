@@ -15,10 +15,22 @@
   import { signOut } from 'firebase/auth';
   import { firebaseAuth } from '$lib/firebase';
   import { authUser } from '$lib/authStore';
- 
+  import { db } from '$lib/firebase';
+  import { onMount } from "svelte";
+  import { doc, getDoc, setDoc } from "firebase/firestore";
+
   const handleLogout = () => {
     signOut(firebaseAuth)
       .then(() => {
+        profileData = {
+        username: '',
+        firstName: '',
+        lastName: '',
+        id: '',
+        email: '',
+        desc: '',
+        tagline: ''
+        };
         $authUser = undefined;
         goto('/login');
       })
@@ -27,9 +39,32 @@
       });
   };
 
-    const handleSubmit = () => {
-        alert('Form submited.');
-    };
+  onMount(async () => {
+    try {
+      const profileDoc = await getDoc(doc(db, "userProfiles", profileData.id));
+
+      if (profileDoc.exists()) { 
+        const data = profileDoc.data();
+        if ('username' in data && 'firstName' in data && 'lastName' in data && 'id' in data 
+          && 'email' in data && 'desc' in data && 'tagline' in data) {
+            profileData = profileDoc.data() as typeof profileData;
+          }
+        else
+          console.log("Document data incomplete!");
+      } else 
+          console.log("No user data!");
+    } catch (error) {
+      console.error("Error getting user data: ", error);
+    }
+  });
+  async function handleSubmit(): Promise<void> {
+      try {
+          await setDoc(doc(db, "userProfiles", profileData.id), profileData);
+          alert('Form Submitted.');
+      } catch (error) {
+          console.error("Error", error);
+      }
+  }
 
     let selected: any;
 
