@@ -3,6 +3,8 @@
     import { TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Button, Dropdown, Checkbox, ButtonGroup } from 'flowbite-svelte';
     import { Section } from 'flowbite-svelte-blocks';
     import { ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
+    import { page } from '$app/stores';
+
 
     let urlTableClass = "max-w-xs overflow-x-hidden hover:overflow-x-auto scrollbar";
 
@@ -46,6 +48,14 @@
 
         processedData.set(uniqueData);
         console.log(uniqueData);
+
+        // Get Tag from URL
+        const urlParams = $page.url.searchParams;
+        const tagFromUrl = urlParams.get('tag');
+        if (tagFromUrl) {
+            searchTerm = tagFromUrl;
+        }
+
     });
 
 

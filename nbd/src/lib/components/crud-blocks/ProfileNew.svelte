@@ -132,7 +132,7 @@ function updateAchiementTags() {
 <Img src="/about/3-square.webp" alt="{profileData.username}" size="w-72" imgClass="h-72" class="rounded-full m-auto" />
 
 
-<Section name="crudcreateform" sectionClass="mt-0 ">
+<Section name="crudcreateform" sectionClass="mt-0 mb-10">
     <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Profile</h2>
     <form on:submit={handleSubmit}>
       <div class="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-6">
@@ -169,7 +169,7 @@ function updateAchiementTags() {
     </form>
 </Section>
 
-
+<!-- 
 <Card padding="xl" class="m-auto mb-32">
     <List tag="ul" list="none" class="max-w-xl w-72 divide-y divide-gray-200 dark:divide-gray-700">
         <p class="text-xl dark:text-white">Achiements</p>
@@ -187,7 +187,7 @@ function updateAchiementTags() {
         {/each}
         
     </List>
-</Card>
+</Card> -->
 
 <Modal bind:open={popupModal} size="xs" autoclose>
   <div class="text-center">
