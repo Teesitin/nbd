@@ -64,7 +64,7 @@
             await setDoc(docRef, updatedDoc);
             console.log('Document successfully updated!');
 
-            // Close the modal and reset form fields
+            // Close the modal and reset form fields test
             defaultModal = false;
         } catch (e) {
             console.error('Error updating document: ', e);
