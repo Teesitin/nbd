@@ -6,7 +6,7 @@
     import { createUserWithEmailAndPassword } from 'firebase/auth';
     import { db, firebaseAuth } from '$lib/firebase';
     import { getDatabase, ref, set } from "firebase/database";
-    import { addDoc, collection } from 'firebase/firestore';
+    import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
     import { authUser } from '$lib/authStore';
 
 
@@ -74,7 +74,7 @@
                     username: username
                 };
 
-                const docRef = await addDoc(collectionRef, newProfile);
+                setDoc(doc(db, 'profileData', $authUser.uid), newProfile);
             })
             .catch((error) => {
                 errorCode = error.code;
@@ -90,6 +90,8 @@
                 success = false;
             });
     };
+
+
 
 
 </script>
