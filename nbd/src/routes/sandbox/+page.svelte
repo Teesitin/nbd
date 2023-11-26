@@ -36,10 +36,10 @@
     }
 
 
-    let title = 'Forbidden Software';
+    let title = '';
     let desc = 'This is the basic description of a certain document that you can now read';
-    let url = 'https://chat.openai.com/';
-    let rating = 4;
+    let url = '';
+    let rating = 3;
     let ratingComment = 'This is a test comment to display the basic functionality';
     let tags = 'AI, LLM, Forbidden, ChatGPT, Software';
     let category = 'Language Model';
@@ -166,9 +166,9 @@
 
         <Label class="space-y-2">
             <span>Rating Comment</span>
-            <div class="bg-opacity-50 dark:bg-opacity-80 max-w-xl mx-auto">
+            <div class="max-w-xl mb-4">
                 {#if ratingComment && ratingComment.length > 0}
-                    <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 mb-4 shadow-md">
+                    <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 shadow-md">
                         <p class="text-gray-500 dark:text-white">{ratingComment}</p>
                     </div>
                 {:else}
