@@ -12,7 +12,7 @@
           github: "https://github.com/Teesitin",
           alt: 'DeLayne Russell',
           name: 'DeLayne Russell',
-          jobTitle: 'CEO & Web Developer',
+          jobTitle: 'CEO',
           description: 'His biggest Dream is to complete this site. He likes Corned Beef and Cabbage. ㅤ'
       },
       {
@@ -21,8 +21,8 @@
           github: "https://github.com/CCRollins",
           alt: 'Charity Rollins',
           name: 'Charity Rollins',
-          jobTitle: 'Lost & Confused',
-          description: "But a software developer in the making! Her hair is full of secrets . . . ㅤㅤㅤㅤ"
+          jobTitle: 'API',
+          description: "She's a software engineer in the making! Her hair is full of secrets . . .ㅤㅤㅤㅤ"
       },
       {
           href: '/',
@@ -30,8 +30,8 @@
           github: "https://github.com/DMosh235",
           alt: 'Daniel Moshovetis',
           name: 'Daniel Moshovetis',
-          jobTitle: 'Front-End Developer',
-          description: "He has a cute dog that can balance Cheetos on his nose while dressed as a turkey!"
+          jobTitle: 'Front-End',
+          description: "His dog can balance Cheetos on his nose while dressed as a turkey!ㅤㅤㅤㅤㅤㅤ"
       },
       {
           href: '/',
@@ -39,7 +39,7 @@
           github: "https://github.com/tsehaiB",
           alt: 'Tsehai Boucaud',
           name: 'Tsehai Boucaud',
-          jobTitle: 'Back-End Developer',
+          jobTitle: 'Database',
           description: 'Uses her skills earned in tetris and bookshelf organizing to write passable code!'
       },
       {
@@ -48,8 +48,8 @@
           github: "https://github.com/camzxx",
           alt: 'Camila Florez',
           name: 'Camila Florez',
-          jobTitle: 'Vibing',
-          description: 'Also has a cute dog. We all have cute dogs. Everyone should have a cute dog.ㅤ'
+          jobTitle: 'Back-End',
+          description: "She's a Cloud Software Engineer. She loves to travel and hang out with friends!ㅤ"
       }
   ];
 
