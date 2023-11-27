@@ -172,7 +172,7 @@
                 {#each pagesToShow as pageNumber}
                 <Button on:click={() => goToPage(pageNumber)}>{pageNumber}</Button>
                 {/each}
-                <Button on:click={loadNextPage} disabled={totalPages === endPage}><ChevronRightOutline size='xs' class='m-1.5'/></Button>
+                <Button on:click={loadNextPage} disabled={totalPages === endPage + 1}><ChevronRightOutline size='xs' class='m-1.5'/></Button>
             </ButtonGroup>
         </div>
 

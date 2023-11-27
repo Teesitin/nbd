@@ -5,7 +5,6 @@
     import type { DocData } from '$lib/docData';
     import { authUser } from '$lib/authStore';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
-    import { goto } from '$app/navigation';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
     export let clickableTitle = 'Edit Doc';
@@ -66,9 +65,6 @@
         try {
             await setDoc(docRef, updatedDoc);
             console.log('Document successfully updated!');
-
-            defaultModal = false;
-            resetFormFields();
             window.location.reload();
 
         } catch (e) {
