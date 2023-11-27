@@ -6,6 +6,7 @@
     import { authUser } from '$lib/authStore';
     import { ExclamationCircleOutline } from 'flowbite-svelte-icons';
     import { Rating, AdvancedRating, ScoreRating } from 'flowbite-svelte';
+    import UserComments from './UserComments.svelte';
 
     export let docID = 'jBwzq0g5zzRaoRuxcYVs';
     export let clickableTitle = 'View Doc';
@@ -116,13 +117,7 @@
         <Label class="space-y-2">
             <span>Comments</span>
             <div class="max-w-xl mb-4">
-                {#if ratingComment && ratingComment.length > 0}
-                    <div class="bg-scorpion-0 dark:bg-scorpion-950 rounded-lg p-4 shadow-md">
-                        <p class="text-gray-500 dark:text-white">{ratingComment}</p>
-                    </div>
-                {:else}
-                    <p>No comments available.</p>
-                {/if}
+               <UserComments mainURL={url}/>
             </div>
         </Label>
 
