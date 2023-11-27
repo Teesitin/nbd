@@ -21,8 +21,8 @@
           github: "https://github.com/CCRollins",
           alt: 'Charity Rollins',
           name: 'Charity Rollins',
-          jobTitle: 'Title',
-          description: "Description"
+          jobTitle: 'Lost & Confused',
+          description: "But a software dev in the making! Her hair is full of secrets..."
       },
       {
           href: '/',
@@ -39,8 +39,8 @@
           github: "https://github.com/tsehaiB",
           alt: 'Tsehai Boucaud',
           name: 'Tsehai Boucaud',
-          jobTitle: 'Title',
-          description: 'Description'
+          jobTitle: 'Web Developer',
+          description: 'Tsehai uses her skills earned in tetris and bookshelf organizing to write passable code!'
       },
       {
           href: '/',
