@@ -47,6 +47,7 @@
     let deleteModal = false;
 
     async function editDocSubmit() {
+
     if ($authUser && docID) {
         const docRef = doc(db, 'docData', docID);
         
@@ -130,7 +131,7 @@ function openEditModal() {
 <a on:click={openEditModal} class="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500">{clickableTitle}</a>
 
 <Modal bind:open={defaultModal} size="md" autoclose={false} class="w-full">
-    <form on:submit={editDocSubmit}>
+
         <div class="grid gap-4 mb-4">
 
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit Docs</h3>
@@ -161,12 +162,12 @@ function openEditModal() {
 
 
         <div class="flex gap-4 mt-4">
-            <Button type="submit" class="w-1/2">Update</Button>
+            <Button type="button" class="w-1/2" on:click={editDocSubmit}>Update</Button>
             <Button type="button" class="w-1/2" on:click={() => (deleteModal = true)} color="alternative">Delete</Button>
         </div>
 
         </div>
-    </form>
+
 </Modal>
 
 <Modal bind:open={deleteModal} size="xs" autoclose backdropClass='fixed inset-0 z-50 bg-gray-900 bg-opacity-50 dark:bg-opacity-80'>
