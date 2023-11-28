@@ -98,7 +98,7 @@
 
   </script>
   
-<Section name="tableheader" classSection='bg-transparent p-3 sm:p-5'>
+<Section name="tableheader" classSection='bg-transparent p-3 sm:p-5 mb-24'>
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput}>
         <div slot="header" class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
 

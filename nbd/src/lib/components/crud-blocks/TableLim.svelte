@@ -26,13 +26,13 @@
             }
         });
     });
-
-
-
-
+    
     // Optional: Category Filter
     export let categoryFilter = "";
-    $: if (categoryFilter) {
+    
+    $: if (categoryFilter === "") {
+    filteredData = $firestoreData.filter(doc => !doc.category || doc.category === "");
+    } else if (categoryFilter) {
         filteredData = $firestoreData.filter(doc => doc.category.toLowerCase().includes(categoryFilter.toLowerCase()));
     } else {
         filteredData = $firestoreData;

@@ -2,6 +2,8 @@
   import { Card, Button } from 'flowbite-svelte';
   import { List, Li } from 'flowbite-svelte';
   import { Progressbar } from 'flowbite-svelte';
+  import { Spinner } from 'flowbite-svelte';
+
 
   import { Section } from 'flowbite-svelte-blocks';
   import { Label, Input, Select, Textarea } from 'flowbite-svelte';
@@ -31,17 +33,20 @@
   let username = '';
 
   let showToast = false;
+  let loggingOut = false;
  
-  const handleLogout = () => {
-    signOut(firebaseAuth)
-      .then(() => {
+  const handleLogout = async () => {
+      try {
+        loggingOut = true;
+        await signOut(firebaseAuth);
         $authUser = undefined;
-        goto('/login');
-      })
-      .catch((error) => {
+        window.location.assign("/login");
+      } catch (error) {
         console.log(error);
-      });
+        loggingOut = false;
+    }
   };
+
 
   const handleSubmit = async () => {
     if ($authUser) {
@@ -71,17 +76,6 @@
       { value: 'phone', name: 'Phones' }
   ];
 
-
-
-  let profileData = {
-      username:'Teesitin',
-      firstName: 'DeLayne',
-      lastName: 'Russell',
-      id:'123',
-      email:'example@gmail.com',
-      desc:'A Web Developer that has no clue with what he is doing...',
-      tagline:'Doc Doc Who'
-  }
 
   let achievements = [
     {
@@ -201,7 +195,12 @@
 
         <div class="flex w-96">
           <Button type="submit" class="w-1/2 mr-6">Update Profile</Button>
-          <Button type="button" class="w-1/2 mx-6" on:click={() => (popupModal = true)} color="alternative">Log Out</Button>
+
+          {#if !loggingOut}
+            <Button type="button" class="w-1/2 mx-6" on:click={() => (popupModal = true)} color="alternative">Log Out</Button>
+          {:else}
+            <Button type="button" class="w-1/2 mx-6" on:click={() => (popupModal = true)} color="alternative"><Spinner /></Button>
+          {/if}
         </div>
       </div>
     </form>
