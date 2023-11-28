@@ -9,9 +9,6 @@
     import { onMount } from 'svelte';
     import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
-
-
-
     const dispatch = createEventDispatcher();
 
     let email = '';
@@ -117,7 +114,8 @@
 
                 <div class="flex items-start">
                     <Checkbox>Remember me</Checkbox>
-                    <a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500" on:click|preventDefault={resetPassword}>Forgot password?</a>                    </div>
+                    <a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500" on:click|preventDefault={resetPassword}>Forgot password?</a>
+                </div>
 
                 <div class="flex gap-6">
                     <Button type="button" color="alternative" class="w-1/2"  on:click={toggleToSignUp}>Sign Up</Button>
