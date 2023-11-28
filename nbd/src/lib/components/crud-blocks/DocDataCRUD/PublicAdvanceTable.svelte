@@ -5,6 +5,8 @@
     import { ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
     import { page } from '$app/stores';
     import ViewDoc from './ViewDoc.svelte';
+    import { Popover } from 'flowbite-svelte';
+    import { QuestionCircleSolid } from 'flowbite-svelte-icons';
 
 
     let urlTableClass = "max-w-xs overflow-x-hidden hover:overflow-x-auto scrollbar";
@@ -30,14 +32,16 @@
         const querySnapshot = await getDocs(collectionRef);
         const docs = querySnapshot.docs.map(doc => doc.data() as DocData);
 
+        console.log(docs);
+
         const urlMap = new Map();
         docs.forEach(doc => {
             if (!urlMap.has(doc.url)) {
                 urlMap.set(doc.url, { totalRating: 0, count: 0, tags: new Set() });
             }
             const entry = urlMap.get(doc.url);
-            entry.totalRating += doc.rating;
-            entry.count++;
+            entry.totalRating += parseInt(doc.rating);
+            entry.count += 1;
             doc.tags.split(',').forEach(tag => entry.tags.add(tag.trim()));
         });
 
@@ -74,7 +78,7 @@
     let totalPages = 0;
     let pagesToShow:any = [];
     let totalItems = 0;
-    $: totalItems = $processedData.length;
+    $: totalItems = filteredData.length;
     let startPage:any;
     let endPage:any;
   
@@ -147,7 +151,7 @@
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput}>
         <TableHead>
             <TableHeadCell>Url</TableHeadCell>
-            <TableHeadCell>Rating</TableHeadCell>
+            <TableHeadCell class="flex place-content-evenly">Rating<QuestionCircleSolid id="ratingPopover" class="w-4 h-4 ml-1.5" /></TableHeadCell>
             <TableHeadCell>Tags</TableHeadCell>
             <TableHeadCell>More</TableHeadCell>
         </TableHead>
@@ -157,7 +161,7 @@
             {#each filteredData as item}
             <TableBodyRow>
                 <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3 text-center">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">
                     <ViewDoc url={item.url} rating={item.averageRating} tags={item.tags}/>
@@ -168,7 +172,7 @@
             {#each currentPageItems as item}
             <TableBodyRow>
                 <TableBodyCell class="{urlTableClass}"><a href="{item.url}" target="_blank" rel="noopener noreferrer" class="text-[#ef562f] hover:underline">{item.url}</a></TableBodyCell>
-                <TableBodyCell tdClass="px-4 py-3">{item.averageRating}</TableBodyCell>
+                <TableBodyCell tdClass="px-4 py-3 text-center">{item.averageRating}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">{item.tags}</TableBodyCell>
                 <TableBodyCell tdClass="px-4 py-3">
                     <ViewDoc url={item.url} rating={item.averageRating} tags={item.tags}/>
@@ -196,3 +200,12 @@
 
     </TableSearch>
 </Section>
+
+
+<Popover triggeredBy="#ratingPopover" class="w-72 text-sm font-light text-gray-500 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400" placement="bottom-start">
+    <div class="p-3 space-y-2">
+      <h3 class="font-semibold text-gray-900 dark:text-white">Rating Specifics</h3>
+      <div>Each URL's average rating is calculated by summing up all individual ratings associated with that URL and then dividing the total by the number of ratings.</div>
+      <div>This gives a consolidated view of how users collectively perceive the quality or value of the content linked to each URL.</div>
+    </div>
+</Popover>

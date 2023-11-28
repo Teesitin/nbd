@@ -56,6 +56,10 @@
 <Card class="flex flex-col justify-between m-4 p-4 h-full">
     <div>
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {#if categoryTitle == ""}
+                Uncategorized
+            {/if}
+            
             {categoryTitle}
         </h5>
         <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
