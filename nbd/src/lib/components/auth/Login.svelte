@@ -9,6 +9,8 @@
     import { onMount } from 'svelte';
     import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
+
+
     const dispatch = createEventDispatcher();
 
     let email = '';
@@ -18,6 +20,27 @@
     // Errors
     let errorCode = '';
     let errorMessage = '';
+
+    function validateEmail(email: string): boolean { 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    const resetPassword = () => { 
+        const auth = getAuth();
+        if (validateEmail(email)) {
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    alert('Please check your email! We\'ve sent you a password reset link.');
+                })
+                .catch((error) => {
+                    errorCode = error.code;
+                    console.log(errorCode,  "There was an issue with sending the password reset");
+                    alert(`Failed to send password reset email: ${errorMessage}`);
+                });
+        } else {
+            alert('Your email should follow the format of "name"@"address"."domain", i.e. "jake@statefarm.com".');
+        }
+    };
 
 
     function toggleToSignUp() {
@@ -57,32 +80,6 @@
             });
     }; 
 
-    // function validateEmail(email: string): boolean { 
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     return emailRegex.test(email);
-    // }
-    // const resetPassword = () => { 
-    //     const auth = getAuth();
-    //     if (validateEmail(email)) {
-    //         sendPasswordResetEmail(auth, email)
-    //             .then(() => {
-    //                 alert('Please check your email! We\'ve sent you a password reset link.');
-    //             })
-    //             .catch((error) => {
-    //                 errorCode = error.code;
-    //                 console.log(errorCode,  "There was an issue with sending the password reset");
-    //                 alert(`Failed to send password reset email: ${errorMessage}`);
-    //             });
-    //     } else {
-    //         alert('Your email should follow the format of "name"@"address"."domain", i.e. "jake@statefarm.com".');
-    //     }
-    // };
-
-
-
-
-
-
     onMount(() => {
         (async () => {
             firebaseAuth.onAuthStateChanged(user => {
@@ -112,12 +109,9 @@
                     <Input type="password" name="password" placeholder="" required bind:value={password}/>
                 </Label>
 
-                <!-- help -->
-
                 <div class="flex items-start">
                     <Checkbox>Remember me</Checkbox>
-                    <a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500" >Forgot password?</a>
-                    <!-- on:click|preventDefault={resetPassword} -->
+                    <a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500" on:click|preventDefault={resetPassword}>Forgot password?</a>    
                 </div>
 
                 <div class="flex gap-6">
