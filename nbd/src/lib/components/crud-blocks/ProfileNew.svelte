@@ -164,7 +164,7 @@
 </script>
 
 {#if url == ""}
-  <Img src="/about/creators/delayne.webp" alt="{username}" size="w-52" imgClass="h-52" class="rounded-full m-auto" />
+  <Img src="/about/unknown.jpg" alt="{username}" size="w-52" imgClass="h-52" class="rounded-full m-auto" />
 {:else}
   <Img src={url} alt="{username}" size="w-52" imgClass="h-52" class="rounded-full m-auto" />
 {/if}
