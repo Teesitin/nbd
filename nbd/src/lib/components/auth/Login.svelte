@@ -112,6 +112,8 @@
                     <Input type="password" name="password" placeholder="" required bind:value={password}/>
                 </Label>
 
+                <!-- help -->
+
                 <div class="flex items-start">
                     <Checkbox>Remember me</Checkbox>
                     <a href="/" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500" >Forgot password?</a>
