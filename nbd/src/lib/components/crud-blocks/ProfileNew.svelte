@@ -163,7 +163,7 @@
 
 </script>
 
-<Img src={url} alt="{username}" size="w-72" imgClass="h-72" class="rounded-full m-auto" />
+<Img src={url} alt="{username}" size="w-52" imgClass="h-52" class="rounded-full m-auto" />
 
 
 <Section name="crudcreateform" sectionClass="mt-0 mb-10">
