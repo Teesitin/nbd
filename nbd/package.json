@@ -32,7 +32,7 @@
 		"@fontsource/roboto": "^5.0.8",
 		"@fontsource/telex": "^5.0.8",
 		"apexcharts": "^3.44.0",
-		"firebase": "^10.6.0",
+		"firebase": "^10.7.0",
 		"iconify-icon": "^1.0.8",
 		"prettier": "^3.1.0"
 	}

@@ -25,8 +25,18 @@
 
         commentArray.set(newCommentArray);
     });
+
+
+    let missing = ['There are no comments for this doc'];
 </script>
 
-<Listgroup items={$commentArray} let:item class="w-full">
-    {item}
-</Listgroup>
+{#if $commentArray.length > 0}
+    <Listgroup items={$commentArray} let:item class="w-full">
+        {item}
+    </Listgroup>
+{:else}
+    <Listgroup items={missing} let:item class="w-full">
+        {item}
+    </Listgroup>
+{/if}
+
